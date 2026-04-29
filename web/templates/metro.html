@@ -1,0 +1,228 @@
+{% extends "base.html" %}
+
+{% block content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/metro.css') }}">
+
+<div class="metro-page">
+    <div class="metro-header">
+        <h1>Riesgo de <span>alertas por linea</span></h1>
+        <p>Modelo preentrenado por linea para estimar incidencias en la proxima hora.</p>
+    </div>
+
+    <div class="section">
+        <div class="section-header">
+            <h3>Predicciones por grupos de color</h3>
+            <button type="button" class="view-toggle-button" data-view-toggle aria-pressed="false">
+                Ver vista guiada
+            </button>
+        </div>
+
+        <div class="line-group-grid" data-group-view="grid">
+            {% for group in line_group_cards %}
+            <article class="line-group-card" style="--group-color: {{ group.color }}; --group-text-color: {{ group.text_color }};">
+                <div class="line-group-header">
+                    <div>
+                        <p class="eyebrow">{{ group.name }}</p>
+                        <h4>{{ group.family }}</h4>
+                    </div>
+                    <span class="risk-chip risk-{{ group.risk_level }}">{{ group.risk_level }}</span>
+                </div>
+
+                <p class="line-group-description">{{ group.description }}</p>
+
+                <div class="line-group-stats">
+                    <div class="line-group-stat">
+                        <span>Riesgo total</span>
+                        <strong>{{ "%.2f"|format(group.alert_prob_next_60m * 100) }}%</strong>
+                    </div>
+                    <div class="line-group-stat">
+                        <span>Delay</span>
+                        <strong>{{ "%.2f"|format(group.delay_prob_next_60m * 100) }}%</strong>
+                    </div>
+                    <div class="line-group-stat">
+                        <span>Suspension</span>
+                        <strong>{{ "%.2f"|format(group.suspension_prob_next_60m * 100) }}%</strong>
+                    </div>
+                </div>
+
+                <div class="line-prob-list">
+                    {% for row in group.line_rows %}
+                    <div class="line-prob-row" data-map-line="{{ row.line }}" tabindex="0" role="button" aria-label="Resaltar linea {{ row.line }} en el mapa">
+                        <div class="line-prob-line">
+                            <span class="line-badge">{{ row.line }}</span>
+                            <div class="line-prob-line-copy">
+                                <strong>Linea {{ row.line }}</strong>
+                            </div>
+                        </div>
+                        <div class="line-prob-metrics">
+                            <div class="line-prob-metric" style="--metric-fill: {{ "%.2f"|format(row.alert_prob_next_60m * 100) }}%;">
+                                <span>Riesgo</span>
+                                <strong>{{ "%.2f"|format(row.alert_prob_next_60m * 100) }}%</strong>
+                            </div>
+                            <div class="line-prob-metric" style="--metric-fill: {{ "%.2f"|format(row.delay_prob_next_60m * 100) }}%;">
+                                <span>Delay</span>
+                                <strong>{{ "%.2f"|format(row.delay_prob_next_60m * 100) }}%</strong>
+                            </div>
+                            <div class="line-prob-metric" style="--metric-fill: {{ "%.2f"|format(row.suspension_prob_next_60m * 100) }}%;">
+                                <span>Suspension</span>
+                                <strong>{{ "%.2f"|format(row.suspension_prob_next_60m * 100) }}%</strong>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </article>
+            {% endfor %}
+        </div>
+
+        <div class="line-group-focus-view" data-group-view="focus" hidden>
+            <div class="focus-view-toolbar">
+                <button type="button" class="focus-arrow" data-carousel-prev aria-label="Grupo anterior">‹</button>
+                <div class="focus-view-status">
+                    <span class="focus-view-label">Vista guiada</span>
+                    <strong><span data-carousel-current>1</span> / {{ line_group_cards|length }}</strong>
+                </div>
+                <button type="button" class="focus-arrow" data-carousel-next aria-label="Grupo siguiente">›</button>
+            </div>
+
+            <div class="focus-view-stage">
+                {% for group in line_group_cards %}
+                <article
+                    class="focus-group-card{% if loop.first %} is-active{% endif %}"
+                    data-focus-card
+                    data-index="{{ loop.index0 }}"
+                    style="--group-color: {{ group.color }}; --group-text-color: {{ group.text_color }};"
+                    {% if not loop.first %}hidden{% endif %}
+                >
+                    <div class="focus-group-top">
+                        <div>
+                            <p class="eyebrow">{{ group.name }}</p>
+                            <h4>{{ group.family }}</h4>
+                            <p class="line-group-description">{{ group.description }}</p>
+                        </div>
+                        <div class="focus-group-side">
+                            <span class="risk-chip risk-{{ group.risk_level }}">{{ group.risk_level }}</span>
+                            <div class="focus-group-summary">
+                                <div>
+                                    <span>Riesgo</span>
+                                    <strong>{{ "%.2f"|format(group.alert_prob_next_60m * 100) }}%</strong>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="focus-group-lines">
+                        {% for row in group.line_rows %}
+                        <div class="line-prob-row focus-line-row" data-map-line="{{ row.line }}" tabindex="0" role="button" aria-label="Resaltar linea {{ row.line }} en el mapa">
+                            <div class="line-prob-line">
+                                <span class="line-badge">{{ row.line }}</span>
+                                <div class="line-prob-line-copy">
+                                    <strong>Linea {{ row.line }}</strong>
+                                </div>
+                            </div>
+                            <div class="line-prob-metrics">
+                                <div class="line-prob-metric" style="--metric-fill: {{ "%.2f"|format(row.alert_prob_next_60m * 100) }}%;">
+                                    <span>Riesgo</span>
+                                    <strong>{{ "%.2f"|format(row.alert_prob_next_60m * 100) }}%</strong>
+                                </div>
+                                <div class="line-prob-metric" style="--metric-fill: {{ "%.2f"|format(row.delay_prob_next_60m * 100) }}%;">
+                                    <span>Delay</span>
+                                    <strong>{{ "%.2f"|format(row.delay_prob_next_60m * 100) }}%</strong>
+                                </div>
+                                <div class="line-prob-metric" style="--metric-fill: {{ "%.2f"|format(row.suspension_prob_next_60m * 100) }}%;">
+                                    <span>Suspension</span>
+                                    <strong>{{ "%.2f"|format(row.suspension_prob_next_60m * 100) }}%</strong>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </article>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <div class="two-column">
+        <div class="section">
+            <h3>Calidad del modelo</h3>
+            <div class="metric-grid">
+                {% for metric in metric_cards %}
+                <div class="metric-card">
+                    <p class="eyebrow">{{ metric.label }}</p>
+                    <div class="metric-value">
+                        {% if metric.roc_auc is not none %}
+                        {{ "%.3f"|format(metric.roc_auc) }}
+                        {% else %}
+                        n/d
+                        {% endif %}
+                    </div>
+                    <p class="metric-caption">ROC AUC</p>
+                    <p class="metric-sub">
+                        Brier {{ "%.3f"|format(metric.brier_score) }}
+                        |
+                        prevalencia {{ "%.1f"|format(metric.positive_rate * 100) }}%
+                    </p>
+                </div>
+                {% endfor %}
+            </div>
+            {% if meta %}
+            <p class="small-note">
+                Holdout temporal: {{ meta.test_start }} -> {{ meta.test_end }}
+                |
+                filas test {{ meta.test_rows }}
+                |
+                lineas {{ meta.n_lines }}
+            </p>
+            {% endif %}
+        </div>
+
+        <div class="section">
+            <h3>Variables mas influyentes</h3>
+            <div class="importance-list">
+                {% for row in importance %}
+                <div class="importance-row">
+                    <span>{{ row.feature }}</span>
+                    <strong>{{ "%.3f"|format(row.importance) }}</strong>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <div class="section prediction-map-section" id="metro-prediction-map">
+        <div class="prediction-map-header">
+            <div class="prediction-map-intro">
+                <h3>Mapa predicciones</h3>
+                <p class="prediction-map-copy">
+                    Mapa interactivo con calles de fondo, lineas coloreadas y trenes en movimiento. Pulsa una linea en las tarjetas para resaltarla aqui.
+                </p>
+                <button type="button" class="map-selection-chip" data-map-clear hidden aria-label="Quitar linea seleccionada del mapa">
+                    <span data-map-selection-label>Línea seleccionada</span>
+                    <strong>×</strong>
+                </button>
+            </div>
+        </div>
+        <div class="prediction-map-frame">
+            <div class="prediction-map-live">
+                {% if metro_map_static_filename %}
+                <iframe
+                    class="metro-map-frame"
+                    src="{{ url_for('static', filename=metro_map_static_filename, v=metro_map_version) }}"
+                    loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade"
+                    title="Mapa predicciones metro"
+                ></iframe>
+                {% else %}
+                <div class="prediction-map-fallback">
+                    No se pudo cargar el mapa interactivo.
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="{{ url_for('static', filename='js/metro.js') }}"></script>
+
+{% endblock %}

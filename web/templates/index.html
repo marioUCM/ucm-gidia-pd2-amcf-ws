@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="hero">
+
+    <!-- LOGO / TITULO -->
+    <h1>Boost<span>Mobility</span></h1>
+
+    <p class="subtitle">
+        Predicciones inteligentes para conductores de taxi y VTC
+    </p>
+
+    <!-- OPCIONES PRINCIPALES -->
+    <div class="cards">
+
+        <!-- DEMANDA -->
+        <a href="/demanda" class="card">
+            <h2>🚕</h2>
+            <h3>Predecir Demanda</h3>
+            <p>Descubre cuándo y dónde habrá más clientes</p>
+        </a>
+
+        <!-- PROPINAS -->
+        <a href="/tips" class="card">
+            <h2>💰</h2>
+            <h3>Predecir Propinas</h3>
+            <p>Optimiza tus ingresos en cada viaje</p>
+        </a>
+
+        <!-- METRO -->
+        <a href="/metro" class="card">
+            <h2>🚇</h2>
+            <h3>Averías Metro</h3>
+            <p>Anticipa incidencias en el transporte</p>
+        </a>
+
+    </div>
+
+</div>
+
+{% endblock %}

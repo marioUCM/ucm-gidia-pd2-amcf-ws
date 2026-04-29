@@ -1,0 +1,166 @@
+{% extends "base.html" %}
+
+{% block content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/tips.css') }}">
+
+<div class="tips-container">
+    <div class="header">
+        <h1>Análisis <span>de</span> Propina</h1>
+        <p>Optimiza tus rutas comparando ambos modelos de predicción</p>
+    </div>
+
+    <div class="tips-comparison-layout">
+        
+        <div class="model-column">
+            <div class="model-header-compact">
+                <h2>Modelo VTC</h2>
+                <p>Modelo enfocado en predecir la propina de VTC.</p>
+            </div>
+
+            <div class="card-form">
+                <form method="POST" id="form-vtc">
+                    <input type="hidden" name="model_type" value="pretrained">
+
+                    <div class="location-box">
+                        <h3>📍 Punto de Origen</h3>
+                        <div class="input-group">
+                            <label>Distrito</label>
+                            <select class="borough-select" name="PUborough" data-target="PUzone" required>
+                                <option value="">Selecciona distrito</option>
+                                {% for b in zones_by_borough.keys()|sort %}
+                                    <option value="{{ b }}" {% if request.form.get('PUborough') == b %}selected{% endif %}>{{ b }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="input-group">
+                            <label>Zona</label>
+                            <select class="zone-select" name="PUzone" required>
+                                <option value="">Primero elige distrito</option>
+                                {% if request.form.get('PUzone') %}
+                                    <option value="{{ request.form.get('PUzone') }}" selected>{{ request.form.get('PUzone') }}</option>
+                                {% endif %}
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="location-box">
+                        <h3>🏁 Punto de Destino</h3>
+                        <div class="input-group">
+                            <label>Distrito</label>
+                            <select class="borough-select" name="DOborough" data-target="DOzone" required>
+                                <option value="">Selecciona distrito</option>
+                                {% for b in zones_by_borough.keys()|sort %}
+                                    <option value="{{ b }}" {% if request.form.get('DOborough') == b %}selected{% endif %}>{{ b }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="input-group">
+                            <label>Zona</label>
+                            <select class="zone-select" name="DOzone" required>
+                                <option value="">Primero elige distrito</option>
+                                {% if request.form.get('DOzone') %}
+                                    <option value="{{ request.form.get('DOzone') }}" selected>{{ request.form.get('DOzone') }}</option>
+                                {% endif %}
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-grid-time-compact">
+                        <div class="input-group">
+                            <label>Fecha</label>
+                            <input type="date" name="date" class="date-input" required 
+                                   value="{{ request.form.get('date', '2026-04-17') }}">
+                        </div>
+                        <div class="input-group">
+                            <label>Hora</label>
+                            <select name="hour" class="hour-select" required>
+                                {% for h in range(24) %}
+                                    <option value="{{ h }}" {% if request.form.get('hour')|int == h %}selected{% endif %}>{{ h }}:00</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn-primary btn-vtc">CALCULAR VTC</button>
+                </form>
+
+                {% if result and request.form.get('model_type') == 'pretrained' %}
+                <div class="card-result-compact vtc-result" id="result-vtc">
+                    <span class="prediction-title">PROPINA VTC</span>
+                    <h2>{{ result.prediction if result is mapping else result }}</h2>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="model-column">
+            <div class="model-header-compact">
+                <h2>Taxi</h2>
+                <p>Modelo enfocado en predecir la propina de taxis.</p>
+            </div>
+
+            <div class="card-form">
+                <form method="POST" id="form-taxi">
+                    <input type="hidden" name="model_type" value="taxi">
+
+                    <div class="location-box">
+                        <h3>📍 Punto de Origen</h3>
+                        <div class="input-group">
+                            <label>Distrito</label>
+                            <select class="borough-select" name="PUborough" data-target="PUzone" required>
+                                <option value="">Selecciona distrito</option>
+                                {% for b in zones_by_borough.keys()|sort %}
+                                    <option value="{{ b }}" {% if request.form.get('PUborough') == b %}selected{% endif %}>{{ b }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="input-group">
+                            <label>Zona</label>
+                            <select class="zone-select" name="PUzone" required>
+                                <option value="">Primero elige distrito</option>
+                                {% if request.form.get('PUzone') %}
+                                    <option value="{{ request.form.get('PUzone') }}" selected>
+                                        {{ request.form.get('PUzone') }}
+                                    </option>
+                                {% endif %}
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-grid-time-compact">
+                        <div class="input-group">
+                            <label>Fecha</label>
+                            <input type="date" name="date" class="date-input" required 
+                                   value="{{ request.form.get('date', '2026-04-17') }}">
+                        </div>
+                        <div class="input-group">
+                            <label>Hora</label>
+                            <select name="hour" class="hour-select" required>
+                                {% for h in range(24) %}
+                                    <option value="{{ h }}" {% if request.form.get('hour')|int == h %}selected{% endif %}>{{ h }}:00</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn-primary btn-max">CALCULAR TAXI</button>
+                </form>
+
+                {% if result and request.form.get('model_type') == 'taxi' %}
+                <div class="card-result-compact max-result" id="result-max">
+                    <span class="prediction-title">PROPINA TAXI</span>
+                    <h2>{{ result.prediction if result is mapping else result }}</h2>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    window.zonesByBorough = {{ zones_by_borough | tojson | safe }};
+</script>
+
+<script src="{{ url_for('static', filename='js/tips.js') }}"></script>
+
+{% endblock %}

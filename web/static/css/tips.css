@@ -1,0 +1,115 @@
+/* Estilos Generales y Container */
+.tips-container {
+    max-width: 1400px;
+    margin: 40px auto;
+    padding: 0 30px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.header { text-align: center; margin-bottom: 50px; }
+.header h1 { font-size: 42px; font-weight: 800; }
+.header h1 span { color: #ffd60a; }
+
+/* EL NUEVO LAYOUT HORIZONTAL */
+.tips-comparison-layout {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 40px;
+}
+
+/* Definición de las Columnas */
+.model-column {
+    flex: 0 1 550px;
+    display: flex;
+    flex-direction: column;
+}
+
+.model-header-compact {
+    text-align: center;
+    margin-bottom: 20px;
+    padding-left: 10px;
+}
+
+.model-header-compact h2 { font-size: 24px; font-weight: 700; margin-bottom: 5px; }
+.model-header-compact p { color: #666; font-size: 15px; margin: 0; }
+
+/* Tarjeta Formulario */
+.card-form {
+    background: white;
+    padding: 30px;
+    border-radius: 28px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.06);
+    box-sizing: border-box;
+    border: 1px solid #f0f0f0;
+    width: 100%;
+}
+
+/* Location Boxes */
+.location-box {
+    background: #fbfbfb;
+    padding: 18px;
+    border-radius: 16px;
+    border: 1px solid #eee;
+    margin-bottom: 20px;
+}
+
+.location-box h3 {
+    font-size: 14px; margin-bottom: 12px;
+    border-left: 4px solid #ffd60a; padding-left: 8px;
+}
+
+/* Inputs y Grids */
+.input-group { margin-bottom: 12px; }
+.input-group label { display: block; font-size: 12px; font-weight: 600; color: #555; margin-bottom: 4px; }
+
+.borough-select, .zone-select, .date-input, .hour-select {
+    width: 100%; padding: 10px; border-radius: 10px; border: 1px solid #ddd;
+    font-size: 13px; box-sizing: border-box;
+}
+
+.zone-select:disabled {
+    background-color: #f5f5f5;
+    cursor: not-allowed;
+}
+
+.form-grid-time-compact {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 20px;
+    margin: 20px 0; padding: 0 10px;
+}
+
+/* Botones diferenciados */
+.btn-primary {
+    width: 100%; padding: 18px; border: none; border-radius: 14px;
+    font-weight: 800; font-size: 15px; text-transform: uppercase;
+    cursor: pointer; transition: all 0.3s; letter-spacing: 1px;
+}
+
+.btn-vtc { background: #ffd60a; color: #1a1a1a; }
+.btn-vtc:hover { background: #ffc300; transform: translateY(-2px); }
+
+.btn-max { background: #1a1a1a; color: #ffd60a; }
+.btn-max:hover { background: #333; transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
+
+/* Resultados Compactos */
+.card-result-compact {
+    margin-top: 25px; padding: 25px; border-radius: 20px;
+    text-align: center; animation: fadeIn 0.5s;
+}
+
+.card-result-compact h2 { font-size: 3rem; font-weight: 800; margin: 5px 0 0 0; }
+.prediction-title { font-size: 0.8rem; letter-spacing: 2px; opacity: 0.8; }
+
+.vtc-result { background: #fdfae6; color: #1a1a1a; border: 1px solid #f9f2c8; }
+.vtc-result h2 { color: #c09c00; }
+
+.max-result { background: #1a1a1a; color: white; border: 1px solid #333; }
+.max-result h2 { color: #ffd60a; }
+
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+/* RESPONSIVE */
+@media (max-width: 1150px) {
+    .tips-comparison-layout { flex-direction: column; align-items: center; gap: 50px; }
+    .model-column { flex: 1 1 100%; max-width: 600px; }
+}

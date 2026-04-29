@@ -1,0 +1,116 @@
+/* BASE */
+body {
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+    background-color: #ffffff;
+    color: #111;
+}
+
+/* NAVBAR */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 40px;
+    background-color: #000000;
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: 600;
+    color: white;
+}
+
+.logo span {
+    color: #ffd60a; /* amarillo taxi */
+}
+
+.nav-links a {
+    margin-left: 25px;
+    text-decoration: none;
+    color: white;
+    transition: 0.3s;
+}
+
+.nav-links a:hover {
+    color: #ffd60a;
+}
+
+/* HERO */
+.hero {
+    text-align: center;
+    margin-top: 80px;
+}
+
+.hero h1 {
+    font-size: 64px;
+    color: black;
+}
+
+.hero h1 span {
+    color: #ffd60a;
+}
+
+.subtitle {
+    margin-top: 10px;
+    color: #555;
+}
+
+/* CARDS */
+.cards {
+    display: flex;
+    justify-content: center;
+    margin-top: 60px;
+    gap: 30px;
+}
+
+/* CARD BASE */
+.card {
+    background-color: #ffffff;
+    padding: 30px;
+    width: 260px;
+    border-radius: 15px;
+    text-decoration: none;
+    color: black;
+    transition: 0.3s;
+    border: 2px solid #eee;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+}
+
+/* HOVER*/
+.card:hover {
+    transform: translateY(-10px);
+    border-color: #ffd60a;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
+
+/* ICONO */
+.card h2 {
+    font-size: 40px;
+}
+
+/* TITULO */
+.card h3 {
+    margin-top: 10px;
+}
+
+/* TEXTO */
+.card p {
+    font-size: 14px;
+    color: #666;
+}
+
+.card-result {
+    animation: fadeIn 0.4s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateX(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}

@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/money.css') }}">
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+<div class="container">
+    <h1>Análisis de Económico de NY</h1>
+
+    <div class="map-coropletico-container">
+        <div class="map-coropletico-header">
+            <h1>🚕 Mapa Económico y de <span>Propinas 💰​</span></h1>
+            <p>Explora el poder adquisitivo y las zonas más rentables de Nueva York</p>
+        </div>
+
+        <div class="map-coropletico-wrapper">
+            {{ mapa_coropletico | safe }}
+        </div>
+    </div>
+
+    <div class="interactive-section">
+        <div class="controls">
+            <input type="number" id="input-topN" value="{{ topN_actual }}" min="5" max="50" step="5">
+            <button id="btn-update">Actualizar Gráficas</button>
+        </div>
+
+        <div class="grid">
+            <div id="container-g1">{{ grafica1 | safe }}</div>
+            <div id="container-g2">{{ grafica2 | safe }}</div>
+            <div id="container-g3">{{ grafica3 | safe }}</div>
+        </div>
+    </div>
+
+     <div class="static-section">
+        <div id="container-g4">{{ grafica4 | safe }}</div>
+        <div id="container-g5">{{ grafica5 | safe }}</div>
+        <div id="container-g6">{{ grafica6 | safe }}</div>
+    </div>
+
+</div>
+
+<script src="{{ url_for('static', filename='js/money.js') }}"></script>
+
+{% endblock %}

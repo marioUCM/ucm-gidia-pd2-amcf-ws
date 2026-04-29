@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>BoostMobility</title>
+
+    <!-- Favicon (full support) -->
+    <link rel="icon" href="/favicon.ico">
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ url_for('static', filename='img/apple-touch-icon.png') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='img/favicon-32x32.png') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='img/favicon-16x16.png') }}">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+
+    <!-- Fuente -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+    <!--NAVBAR -->
+    <nav class="navbar">
+        <div class="logo">
+            Boost<span>Mobility</span>
+        </div>
+
+        <div class="nav-links">
+            <a href="/">Inicio</a>
+            <a href="/demanda">Demanda</a>
+            <a href="/tips">Propinas</a>
+            <a href="/metro">Metro</a>
+            <a href="/economico">Económico</a>
+            <a href="/eventos">Eventos</a>
+        </div>
+    </nav>
+
+    <!--CONTENIDO -->
+    <div class="container">
+        {% block content %}{% endblock %}
+    </div>
+</body>
+</html>

@@ -1,0 +1,255 @@
+{% extends "base.html" %}
+
+{% block content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/demand.css') }}">
+
+<div class="demand-container">
+
+    <!-- HEADER -->
+    <div class="header">
+        <h1>🚕 Predicción de <span>Demanda</span></h1>
+        <p>Optimiza tus rutas y maximiza tus ingresos</p>
+    </div>
+
+    <div class="demand-layout">
+
+        <aside class="demand-sidebar">
+            <a href="#pretrained-section" class="sidebar-tab active">Modelo Preentrenado</a>
+            <a href="#max-section" class="sidebar-tab">Zona Máxima</a>
+            <a href="#map-section" class="sidebar-tab">Mapa Demanda</a>
+        </aside>
+
+        <div class="demand-main-content">
+
+            <div id="pretrained-section" class="page-section">
+                <div class="model-section">
+                    <div class="model-header">
+                        <h2>Modelo Preentrenado</h2>
+                        <p class="form-subtitle">Usa el modelo ya optimizado entrenado con histórico completo.</p>
+                    </div>
+
+                    <div class="card-form compact-form">
+                        <form method="POST" action="#pretrained-section">
+                            <input type="hidden" name="model_type" value="pretrained">
+
+                            <div class="input-group">
+                                <label>Distrito</label>
+                                <select class="borough-select" name="borough" required>
+                                    <option value="">Selecciona distrito</option>
+                                    {% for b in zones_by_borough.keys() %}
+                                        <option value="{{ b }}" {% if trained_result and trained_result.borough == b %}selected{% endif %}>{{ b }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+
+                            <div class="input-group">
+                                <label>Zona</label>
+                                <select class="zone-select" name="zone" required>
+                                    {% if trained_result %}
+                                        {% for z in zones_by_borough[trained_result.borough] %}
+                                            <option value="{{ z }}" {% if trained_result.zone == z %}selected{% endif %}>{{ z }}</option>
+                                        {% endfor %}
+                                    {% else %}
+                                        <option value="">Primero elige distrito</option>
+                                    {% endif %}
+                                </select>
+                            </div>
+
+                            <div class="input-group">
+                                <label>Fecha</label>
+                                <input type="date" name="date" class="date-input" required min="2025-01-01" max="2025-12-31" value="{{ trained_result.date if trained_result else '2025-01-01' }}">
+                            </div>
+
+                            <div class="input-group">
+                                <label>Hora</label>
+                                <select name="hour" class="hour-select" required>
+                                    {% for h in range(24) %}
+                                        <option value="{{ h }}" {% if trained_result and trained_result.hour == h %}selected{% endif %}>{{ h }}:00</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+
+                            
+                            <input type="hidden" class="previous-trained-input" name="previous_trained" value='{{ trained_result | tojson if trained_result else "" }}'>
+                            <input type="hidden" name="previous_top" value='{{ top_zones_result | tojson if top_zones_result else "" }}'>
+
+                            <button type="submit" class="btn-primary">Predecir</button>
+                        </form>
+                    </div>
+
+                    {% if trained_result %}
+                    <div class="card-result">
+                        <div class="result-meta">
+                            <p><strong>Distrito:</strong> {{ trained_result.borough }}</p>
+                            <p><strong>Zona:</strong> {{ trained_result.zone }}</p>
+                            <p><strong>Fecha:</strong> {{ trained_result.date }}</p>
+                            <p><strong>Hora:</strong> {{ trained_result.hour }}:00</p>
+                        </div>
+                        <div class="prediction-title">Resultado Modelo Preentrenado</div>
+                        <h2>{{ trained_result.prediction }}</h2>
+                        <p class="model-description">Modelo previamente entrenado con datos históricos.</p>
+                    </div>
+                    
+                    {% elif request.method == 'POST' and request.form.get('model_type') == 'pretrained' %}
+                    <div class="card-result" style="border-left: 4px solid #ff4444;">
+                        <div class="prediction-title" style="color: #ff4444;">⚠️ Sin datos históricos</div>
+                        <p>El modelo no ha encontrado registros en el set de pruebas para la zona y la fecha seleccionada (<strong>{{ request.form.get('date') }}</strong>).</p>
+                        <p>Prueba con una fecha que esté dentro del rango de tu dataset.</p>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+
+
+            <div id="max-section" class="page-section">
+                <div class="model-section">
+                    <div class="model-header">
+                        <h2>Zona Máxima</h2>
+                        <p class="form-subtitle">Descubre las zonas con mayor demanda estimada para una fecha y hora concretas.</p>
+                    </div>
+
+                    <div class="card-form compact-form">
+                        <form method="POST" action="#max-section">
+                            <input type="hidden" name="model_type" value="max_zone">
+
+                            <div class="input-group">
+                                <label>Fecha</label>
+                                <input type="date" name="date" class="date-input" required min="2025-01-01" max="2025-12-31"
+                                       value="{{ selected_max.date if selected_max and selected_max.date else '2025-01-01' }}">
+                            </div>
+
+                            <div class="input-group">
+                                <label>Hora</label>
+                                <select name="hour" class="hour-select" required>
+                                    {% for h in range(24) %}
+                                        <option value="{{ h }}" {% if selected_max and selected_max.hour == h %}selected{% endif %}>{{ h }}:00</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+
+                            <div class="input-group">
+                                <label>Distrito</label>
+                                <select name="borough">
+                                    <option value="all" {% if selected_max and selected_max.borough == 'all' %}selected{% endif %}>Todos</option>
+                                    {% for b in zones_by_borough.keys() %}
+                                        <option value="{{ b }}" {% if selected_max and selected_max.borough == b %}selected{% endif %}>{{ b }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+
+                            <div class="input-group">
+                                <label>Tipo de Servicio</label>
+                                <select name="service_type" required>
+                                    <option value="none" {% if selected_max and selected_max.service_type == 'none' %}selected{% endif %}>No seleccionar</option>
+                                    <option value="Taxi" {% if selected_max and selected_max.service_type == 'Taxi' %}selected{% endif %}>Taxi</option>
+                                    <option value="Vtc" {% if selected_max and selected_max.service_type == 'Vtc' %}selected{% endif %}>VTC</option>
+                                </select>
+                            </div>
+
+                            
+                            <input type="hidden" name="previous_trained" value='{{ trained_result | tojson if trained_result else "" }}'>
+                            <input type="hidden" name="previous_top" value='{{ top_zones_result | tojson if top_zones_result else "" }}'>
+
+                            <button type="submit" class="btn-primary">Buscar Mejores Zonas</button>
+                        </form>
+                    </div>
+
+                    {% if top_zones_result %}
+                    <div class="card-result">
+                        <div class="prediction-title">TOP Zonas Recomendadas</div>
+
+                        {% for zone in top_zones_result %}
+                        <div class="top-zone-item">
+                            <p><strong>#{{ loop.index }}</strong> {{ zone.Zone }}</p>
+                            <span>{{ zone.Borough }}</span>
+                            <h4>{{ zone.prediction }}</h4>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    
+                    {% elif request.method == 'POST' and request.form.get('model_type') == 'max_zone' %}
+                    <div class="card-result" style="border-left: 4px solid #ff4444;">
+                        <div class="prediction-title" style="color: #ff4444;">⚠️ Sin datos históricos</div>
+                        <p>No se han encontrado registros de demanda para la fecha (<strong>{{ request.form.get('date') }}</strong>) y los filtros seleccionados.</p>
+                        <p>Prueba a cambiar la fecha o seleccionar "Todos" en los filtros de distrito/servicio.</p>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+
+        <div id="map-section" class="page-section">
+            <div class="model-section">
+                <div class="model-header">
+                    <h2>Mapa de Demanda</h2>
+                    <p class="form-subtitle">Visualiza la demanda estimada en todas las zonas para una fecha y hora.</p>
+                </div>
+
+                <div class="card-form compact-form">
+                    <form method="POST" action="#map-section">
+                        <input type="hidden" name="model_type" value="map">
+
+                        <div class="input-group">
+                            <label>Fecha</label>
+                            <input type="date" name="date" class="date-input" required min="2025-01-01" max="2025-12-31" value="{{ selected_map.date if selected_map and selected_map.date else '2025-01-01' }}">
+                        </div>
+
+                        <div class="input-group">
+                            <label>Hora</label>
+                            <select name="hour" class="hour-select" required>
+                                {% for h in range(24) %}
+                                <option value="{{ h }}" {% if selected_map and selected_map.hour == h %}selected{% endif %}>{{ h }}:00</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <div class="input-group">
+                            <label>Tipo de Servicio</label>
+                            <select name="service_type">
+                                <option value="none" {% if selected_map and selected_map.service_type == 'none' %}selected{% endif %}>No seleccionar</option>
+                                <option value="Taxi" {% if selected_map and selected_map.service_type == 'Taxi' %}selected{% endif %}>Taxi</option>
+                                <option value="Vtc" {% if selected_map and selected_map.service_type == 'Vtc' %}selected{% endif %}>VTC</option>
+                            </select>
+                        </div>
+
+                        
+                        <input type="hidden" name="previous_trained" value='{{ trained_result | tojson if trained_result else "" }}'>
+                        <input type="hidden" name="previous_top" value='{{ top_zones_result | tojson if top_zones_result else "" }}'>
+                        <button type="submit" class="btn-primary">Ver Mapa</button>
+                    </form>
+                </div>
+
+                {% if map_html %}
+                <div class="card-result">
+                    <div class="prediction-title">Mapa de Demanda</div>
+                    <div class="map-container">
+                        {{ map_html | safe }}
+                    </div>
+                    <div class="map-legend">
+                        <div><span class="legend-box high"></span> Alta</div>
+                        <div><span class="legend-box medium"></span> Media</div>
+                        <div><span class="legend-box low"></span> Baja</div>
+                        <div><span class="legend-box nodata"></span> Sin demanda</div>
+                    </div>
+                </div>
+                
+                {% elif request.method == 'POST' and request.form.get('model_type') == 'map' %}
+                <div class="card-result" style="border-left: 4px solid #ff4444;">
+                    <div class="prediction-title" style="color: #ff4444;">⚠️ Sin datos históricos</div>
+                    <p>No hay datos suficientes para generar el mapa en la fecha (<strong>{{ request.form.get('date') }}</strong>).</p>
+                    <p>Asegúrate de introducir una fecha dentro del rango válido de tu dataset de pruebas.</p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- CONEXIÓN BACKEND → JS -->
+<script>
+    window.zonesByBorough = JSON.parse('{{ zones_by_borough | tojson | safe }}');
+</script>
+
+<script src="{{ url_for('static', filename='js/demand.js') }}?v=2"></script>
+
+{% endblock %}
