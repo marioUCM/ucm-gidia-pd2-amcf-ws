@@ -152,11 +152,10 @@ Para la lista completa, consulta [pyproject.toml](pyproject.toml).
 
 La aplicación requiere las siguientes variables de entorno:
 
-```env
+```
 # MinIO Configuration
 ACCESS_KEY=TU_ACCESS_KEY
 SECRET_KEY=TU_SECRET_KEY
-
-``
+```
 
 **Última actualización:** Abril 2026
