@@ -320,18 +320,20 @@
     height: 500px;
     border-radius: 16px;
     overflow: hidden;
-    margin-top: 15px;
+    margin: 15px auto 0 auto;
 }
 
 .map-container iframe {
     width: 100%;
     height: 100%;
     border: none;
+    display: block;
 }
 
-/* optional: make map result wider */
 #map-section .card-result {
     width: 100%;
+    max-width: 1000px;
+    margin-left: 0;
 }
 
 #map-section .model-section {
@@ -350,6 +352,8 @@
     margin-top: 15px;
     font-size: 14px;
     color: #444;
+    max-width: 1000px;
+    margin: 15px 0 0 0;
 }
 
 .map-legend div {
@@ -380,4 +384,12 @@
 
 .legend-box.nodata {
     background-color: #555555;
+}
+
+#map-section .model-section {
+    overflow: hidden;
+}
+
+#map-section .model-section {
+    align-items: flex-start;
 }
