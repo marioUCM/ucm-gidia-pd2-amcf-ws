@@ -150,8 +150,9 @@ Para la lista completa, consulta [pyproject.toml](pyproject.toml).
 
 ## 🔐 Variables de Entorno
 
-La aplicación requiere las siguientes variables de entorno:
+La aplicación requiere las siguientes variables de entorno para usar MinIO.
 
+Crea un archivo '.env' en la raiz con el siguiente contenido:
 ```
 # MinIO Configuration
 ACCESS_KEY=TU_ACCESS_KEY
