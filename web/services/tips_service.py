@@ -11,16 +11,16 @@ cols_taxi = ['tip_amount' ,'Airport_fee','dia_pickup', 'hora_pickup','mes_pickup
             'dia_semana', 'num_events', 'VendorID']
 
 ### LOCAL
-# vtc=pd.read_parquet(BASE_DIR/'../../data/final_models/propinas/vtc_propinas_modelo.parquet')
-# taxi=pd.read_parquet(BASE_DIR/'../../data/final_models/propinas/taxi_propinas_modelo.parquet')
-# fixed_model_vtc = pd.read_pickle(BASE_DIR/"../../data/final_models/propinas/modelo_vtc_propinas_principal.pkl")
-# fixed_model_taxi = pd.read_pickle(BASE_DIR/"../../data/final_models/propinas/modelo_taxi_propinas_principal.pkl")
+vtc=pd.read_parquet(BASE_DIR/'../../data/final_models/propinas/vtc_propinas_modelo.parquet')
+taxi=pd.read_parquet(BASE_DIR/'../../data/final_models/propinas/taxi_propinas_modelo.parquet')
+fixed_model_vtc = pd.read_pickle(BASE_DIR/"../../data/final_models/propinas/modelo_vtc_propinas_principal.pkl")
+fixed_model_taxi = pd.read_pickle(BASE_DIR/"../../data/final_models/propinas/modelo_taxi_propinas_principal.pkl")
 
 ### MINIO
-vtc = load_parquet_from_minio("boostmobility/final_models/propinas/vtc_propinas_modelo.parquet")
-taxi = load_parquet_from_minio("boostmobility/final_models/propinas/taxi_propinas_modelo.parquet", columns=cols_taxi)
-fixed_model_vtc = load_pickle_from_minio("boostmobility/final_models/propinas/modelo_vtc_propinas_principal.pkl")
-fixed_model_taxi = load_pickle_from_minio("boostmobility/final_models/propinas/modelo_taxi_propinas_principal.pkl")
+# vtc = load_parquet_from_minio("boostmobility/final_models/propinas/vtc_propinas_modelo.parquet")
+# taxi = load_parquet_from_minio("boostmobility/final_models/propinas/taxi_propinas_modelo.parquet", columns=cols_taxi)
+# fixed_model_vtc = load_pickle_from_minio("boostmobility/final_models/propinas/modelo_vtc_propinas_principal.pkl")
+# fixed_model_taxi = load_pickle_from_minio("boostmobility/final_models/propinas/modelo_taxi_propinas_principal.pkl")
 
 
 df_pu = vtc[['PULocation_Zone', 'PUservice_zone']].drop_duplicates()

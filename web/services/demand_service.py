@@ -5,19 +5,19 @@ from utils.read_from_minio import load_pickle_from_minio, load_parquet_from_mini
 from pathlib import Path
 
 ### LOCAL
-# BASE_DIR = Path(__file__).resolve().parent
-# df_test = pd.read_parquet(BASE_DIR/"../../data/final_models/demanda/modelo_demanda_test.parquet")
-# df_service_test = pd.read_parquet(BASE_DIR/"../../data/final_models/demanda/modelo_demanda_service_type_test.parquet")
-# fixed_model = pd.read_pickle(BASE_DIR/"../../data/final_models/demanda/modelo_demanda_fijo.pkl")
-# service_model = pd.read_pickle(BASE_DIR/"../../data/final_models/demanda/modelo_demanda_service_type.pkl")
-# taxi_zones = gpd.read_parquet(BASE_DIR/"../../data/utils/taxi_zones.parquet")
+BASE_DIR = Path(__file__).resolve().parent
+df_test = pd.read_parquet(BASE_DIR/"../../data/final_models/demanda/modelo_demanda_test.parquet")
+df_service_test = pd.read_parquet(BASE_DIR/"../../data/final_models/demanda/modelo_demanda_service_type_test.parquet")
+fixed_model = pd.read_pickle(BASE_DIR/"../../data/final_models/demanda/modelo_demanda_fijo.pkl")
+service_model = pd.read_pickle(BASE_DIR/"../../data/final_models/demanda/modelo_demanda_service_type.pkl")
+taxi_zones = gpd.read_parquet(BASE_DIR/"../../data/utils/taxi_zones.parquet")
 
 ### MINIO
-df_test = load_parquet_from_minio("boostmobility/final_models/demanda/modelo_demanda_test.parquet")
-df_service_test = load_parquet_from_minio("boostmobility/final_models/demanda/modelo_demanda_service_type_test.parquet")
-fixed_model = load_pickle_from_minio("boostmobility/final_models/demanda/modelo_demanda_fijo.pkl")
-service_model = load_pickle_from_minio("boostmobility/final_models/demanda/modelo_demanda_service_type.pkl")
-taxi_zones = load_geoparquet_from_minio("boostmobility/utils/taxi_zones.parquet")
+# df_test = load_parquet_from_minio("boostmobility/final_models/demanda/modelo_demanda_test.parquet")
+# df_service_test = load_parquet_from_minio("boostmobility/final_models/demanda/modelo_demanda_service_type_test.parquet")
+# fixed_model = load_pickle_from_minio("boostmobility/final_models/demanda/modelo_demanda_fijo.pkl")
+# service_model = load_pickle_from_minio("boostmobility/final_models/demanda/modelo_demanda_service_type.pkl")
+# taxi_zones = load_geoparquet_from_minio("boostmobility/utils/taxi_zones.parquet")
 
 def get_zones():
 

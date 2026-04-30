@@ -11,11 +11,11 @@ BASE_DIR = Path(__file__).resolve().parent
 
 ### LOCAL
 
-# data = gpd.read_parquet(BASE_DIR/"../../data/money/df_mapa.parquet")
+data = gpd.read_parquet(BASE_DIR/"../../data/money/df_mapa.parquet")
 
 ### MINIO
 
-data = load_geoparquet_from_minio("boostmobility/money/df_mapa.parquet")
+# data = load_geoparquet_from_minio("boostmobility/money/df_mapa.parquet")
 
 
 data['ZIP_CODE'] = data['ZIP_CODE'].astype(str)

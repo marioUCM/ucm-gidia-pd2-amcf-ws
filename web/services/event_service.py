@@ -10,24 +10,24 @@ BASE_DIR = Path(__file__).resolve().parent
 
 ### LOCAL
 
-# data1 = pd.read_parquet(BASE_DIR / "../../data/films/comparativa_taxi.parquet")
-# data2 = pd.read_parquet(BASE_DIR / "../../data/films/impacto_taxi.parquet")
-# data3 = pd.read_parquet(BASE_DIR / "../../data/films/friccion_taxi.parquet")
-# data4 = pd.read_parquet(BASE_DIR / "../../data/events/comparativa_propina.parquet")
-# data5 = pd.read_parquet(BASE_DIR / "../../data/events/comparativa_demanda.parquet")
-# data6 = pd.read_parquet(BASE_DIR / "../../data/films/df_mapa.parquet")
-# data7 = pd.read_parquet(BASE_DIR / "../../data/films/films_location.parquet")
+data1 = pd.read_parquet(BASE_DIR / "../../data/films/comparativa_taxi.parquet")
+data2 = pd.read_parquet(BASE_DIR / "../../data/films/impacto_taxi.parquet")
+data3 = pd.read_parquet(BASE_DIR / "../../data/films/friccion_taxi.parquet")
+data4 = pd.read_parquet(BASE_DIR / "../../data/events/comparativa_propina.parquet")
+data5 = pd.read_parquet(BASE_DIR / "../../data/events/comparativa_demanda.parquet")
+data6 = pd.read_parquet(BASE_DIR / "../../data/films/df_mapa.parquet")
+data7 = pd.read_parquet(BASE_DIR / "../../data/films/films_location.parquet")
 
 
 ### MINIO
 
-data1 = load_parquet_from_minio("boostmobility/films/comparativa_taxi.parquet")
-data2 = load_parquet_from_minio("boostmobility/films/impacto_taxi.parquet")
-data3 = load_parquet_from_minio("boostmobility/films/friccion_taxi.parquet")
-data4 = load_parquet_from_minio("boostmobility/events/comparativa_propina.parquet")
-data5 = load_parquet_from_minio("boostmobility/events/comparativa_demanda.parquet")
-data6 = load_parquet_from_minio("boostmobility/films/df_mapa.parquet")
-data7 = load_parquet_from_minio("boostmobility/films/films_location.parquet")
+# data1 = load_parquet_from_minio("boostmobility/films/comparativa_taxi.parquet")
+# data2 = load_parquet_from_minio("boostmobility/films/impacto_taxi.parquet")
+# data3 = load_parquet_from_minio("boostmobility/films/friccion_taxi.parquet")
+# data4 = load_parquet_from_minio("boostmobility/events/comparativa_propina.parquet")
+# data5 = load_parquet_from_minio("boostmobility/events/comparativa_demanda.parquet")
+# data6 = load_parquet_from_minio("boostmobility/films/df_mapa.parquet")
+# data7 = load_parquet_from_minio("boostmobility/films/films_location.parquet")
 
 def grafica1(topN=25,as_json=False):
 
