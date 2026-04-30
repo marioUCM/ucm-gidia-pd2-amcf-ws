@@ -43,21 +43,18 @@ uv sync
 
 ## 🏃 Ejecución
 
-### Opción 1: Ejecución MinIO  
+### Opción 1: Ejecución usando MinIO  
 
 ```bash
 uv run python -m web.app
 ```
 
 
-### Opción 2: Ejecución local usando Docker
+### Opción 2: Ejecución usando Docker
 
 ```bash
-# Construir la imagen
-docker build -t boostmobility-app .
-
 # Ejecutar el contenedor
-docker run -p 5000:5000 boostmobility-app
+docker run -p 5000:5000 mariogradocker/boostmobility-app
 ```
 En ambos casos la aplicación estará disponible en `http://localhost:5000`
 
