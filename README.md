@@ -20,9 +20,10 @@ Una aplicación web basada en **Flask** para análisis, visualización y predicc
 ## 📋 Requisitos Previos
 
 - **Python 3.13+**
+- **Git**
 - **pip** o **uv** (gestor de dependencias)
 - **Docker** (opcional, para containerización)
-- Acceso a **MinIO** (para datos en la nube)
+- Acceso a **MinIO** (opcional, para datos en la nube)
 
 ## 🚀 Instalación
 
@@ -43,20 +44,87 @@ uv sync
 
 ## 🏃 Ejecución
 
-### Opción 1: Ejecución usando MinIO  
+Existen 3 formas diferentes de ejecutar la aplicación según tus necesidades:
+
+### Opción 1️⃣: Docker (Más Rápido - Recommended)
+
+**Lo más rápido y fácil.** No requiere clonar el repositorio ni instalar dependencias.
 
 ```bash
+docker run -p 5000:5000 mariogradocker/boostmobility-app
+```
+
+**Si el puerto 5000 está ocupado**, redirige a otro:
+```bash
+docker run -p 8080:5000 mariogradocker/boostmobility-app
+```
+*(La aplicación estará en `http://localhost:8080`)*
+
+---
+
+### Opción 2️⃣: Local con uv + MinIO (Recomendado para desarrollo)
+
+**Clonas el repo y usas los datos directamente desde MinIO en la nube** (no necesitas descargar la carpeta de datos).
+
+```bash
+# 1. Clonar el repositorio
+git clone https://github.com/marioUCM/ucm-gidia-pd2-amcf-ws
+cd ucm-gidia-pd2-amcf-ws
+
+# 2. Instalar dependencias con uv
+pip install uv
+uv sync
+
+# 3. Configurar variables de entorno (ver sección 🔐 Abajo)
+# Crear archivo .env con las credenciales de MinIO
+
+# 4. Ejecutar la aplicación
 uv run python -m web.app
 ```
 
+**Ventajas:** Desarrollo ágil, cambios inmediatos, sin descargas pesadas.
 
-### Opción 2: Ejecución usando Docker
+---
+
+### Opción 3️⃣: Local Completo (Sin Docker ni MinIO)
+
+**Clonas el repo, usas uv y descargas todos los datos localmente desde [Google Drive](https://drive.google.com/drive/folders/1dVaG5wBnSt_7TkzQL_85iCKjOYrGUrpq?usp=drive_link).**
 
 ```bash
-# Ejecutar el contenedor
-docker run -p 5000:5000 mariogradocker/boostmobility-app
+# 1. Clonar el repositorio
+git clone https://github.com/marioUCM/ucm-gidia-pd2-amcf-ws
+cd ucm-gidia-pd2-amcf-ws
+
+# 2. Instalar dependencias con uv
+pip install uv
+uv sync
+
+# 3. Descargar datos desde Google Drive
+# Descarga la carpeta 'data/' desde el Drive y colócala en la raíz del proyecto
+# (Tu carpeta de datos debe estar en ./data/)
+
+# 4. Cambiar a la rama local
+git switch local
+
+# 5. Ejecutar la aplicación (sin necesidad de .env)
+uv run python -m web.app
 ```
-En ambos casos la aplicación estará disponible en `http://localhost:5000`
+
+**Ventajas:** Independencia total, sin dependencias externas, funciona offline.
+**Desventajas:** Descarga más pesada (~400 MB), requiere más espacio en disco.
+
+---
+
+## 📊 Comparativa de Opciones
+
+| Criterio | Docker | uv + MinIO | Local Completo |
+|----------|--------|-----------|----------------|
+| 💾 **Espacio en disco** | Mínimo | ~665 MB | ~400 MB+ |
+| 🌐 **Necesita conexión** | ✅ Sí | ✅ Sí (MinIO) | ❌ No |
+| 🔧 **Para desarrollo** | ❌ No recomendado | ✅ Sí | ✅ Sí |
+| 🚀 **Producción** | ✅ Recomendado | ❌ No | ❌ No |
+
+La aplicación estará disponible en `http://localhost:5000` (o en el puerto que especifiques)
 
 ## 📁 Estructura del Proyecto
 
