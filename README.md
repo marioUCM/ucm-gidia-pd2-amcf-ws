@@ -119,7 +119,7 @@ uv run python -m web.app
 
 | Criterio | Docker | uv + MinIO | Local Completo |
 |----------|--------|-----------|----------------|
-| 💾 **Espacio en disco** | Mínimo | ~665 MB | ~400 MB+ |
+| 💾 **Espacio en disco** | ~570 MB | ~665 MB | ~1.1 GB+ |
 | 🌐 **Necesita conexión** | ✅ Sí | ✅ Sí (MinIO) | ❌ No |
 | 🔧 **Para desarrollo** | ❌ No recomendado | ✅ Sí | ✅ Sí |
 | 🚀 **Producción** | ✅ Recomendado | ❌ No | ❌ No |
@@ -170,9 +170,9 @@ La aplicación estará disponible en `http://localhost:5000` (o en el puerto que
 ├── utils/                        # Funciones auxiliares globales
 │   └── read_from_minio.py        # Lectura desde MinIO
 ├── Dockerfile                    # Configuración Docker
-├── pyproject.toml               # Dependencias del proyecto
-├── uv.lock                      # Lock file de uv
-└── README.md                    # Este archivo
+├── pyproject.toml                # Dependencias del proyecto
+├── uv.lock                       # Lock file de uv
+└── README.md                     # Este archivo
 ```
 
 ## 🔧 Dependencias Principales
