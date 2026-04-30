@@ -1,7 +1,6 @@
 from flask import Flask
 from flask import send_from_directory
 import os
-import sys
 from .routes.main_routes import main
 from .routes.demand_routes import demand
 from .routes.metro_routes import metro
@@ -33,4 +32,5 @@ def favicon():
     )
 
 if __name__ == "__main__":
-    app.run(debug=True,use_reloader=False)
+    # app.run(debug=True,use_reloader=False)
+    app.run(host="0.0.0.0", port=5000, debug=False)
