@@ -13,14 +13,14 @@ METRO_MAP_CACHE_FILENAME = "generated/metro_prediction_map.html"
 METRO_MAP_CACHE_PATH = STATIC_DIR / METRO_MAP_CACHE_FILENAME
 
 ### LOCAL
-SNAPSHOT_PATH_LOCAL = BASE_DIR / "../../data/final_models/subway/subway_produccion/latest_snapshot.parquet"
-METRICS_PATH_LOCAL = BASE_DIR / "../../data/final_models/subway/subway_produccion/metrics.json"
-IMPORTANCE_PATH_LOCAL = BASE_DIR / "../../data/final_models/subway/subway_produccion/feature_importance_alert.json"
+# SNAPSHOT_PATH_LOCAL = BASE_DIR / "../../data/final_models/subway/subway_produccion/latest_snapshot.parquet"
+# METRICS_PATH_LOCAL = BASE_DIR / "../../data/final_models/subway/subway_produccion/metrics.json"
+# IMPORTANCE_PATH_LOCAL = BASE_DIR / "../../data/final_models/subway/subway_produccion/feature_importance_alert.json"
 
 ### MINIO
-# SNAPSHOT_PATH_MINIO = "boostmobility/final_models/subway/subway_produccion/latest_snapshot.parquet"
-# METRICS_PATH_MINIO = "boostmobility/final_models/subway/subway_produccion/metrics.json"
-# IMPORTANCE_PATH_MINIO = "boostmobility/final_models/subway/subway_produccion/feature_importance_alert.json"
+SNAPSHOT_PATH_MINIO = "boostmobility/final_models/subway/subway_produccion/latest_snapshot.parquet"
+METRICS_PATH_MINIO = "boostmobility/final_models/subway/subway_produccion/metrics.json"
+IMPORTANCE_PATH_MINIO = "boostmobility/final_models/subway/subway_produccion/feature_importance_alert.json"
 
 METRO_LINE_GROUPS = [
     {
@@ -103,9 +103,9 @@ def _read_json(path: Path | str, default_value):
         return json.loads(path.read_text(encoding="utf-8"))
 
     try:
-        #return load_json_from_minio(path)
-        return pd.read_json(path)
-    except Exception:
+        return load_json_from_minio(path)         # MINIO
+        # return pd.read_json(path)               # LOCAL
+    except Exception:  
         return default_value
 
 
@@ -1190,8 +1190,8 @@ def _generate_metro_prediction_map(snapshot: pd.DataFrame | None = None) -> str 
 
 def _load_snapshot() -> pd.DataFrame | None:
     try:
-        # snapshot = load_parquet_from_minio(SNAPSHOT_PATH_MINIO)     # MINIO
-        snapshot = pd.read_parquet(SNAPSHOT_PATH_LOCAL)           # LOCAL
+        snapshot = load_parquet_from_minio(SNAPSHOT_PATH_MINIO)     # MINIO
+        # snapshot = pd.read_parquet(SNAPSHOT_PATH_LOCAL)           # LOCAL
     except Exception:
         return None
     return snapshot.sort_values("rank").reset_index(drop=True)
@@ -1211,8 +1211,8 @@ def _ensure_metro_prediction_map_file(
 
     source_mtime = max(
         _safe_mtime(METRO_MAP_DATA_PATH),
-        # _safe_mtime(SNAPSHOT_PATH_MINIO),                           # MINIO
-        _safe_mtime(SNAPSHOT_PATH_LOCAL),                         # LOCAL
+        _safe_mtime(SNAPSHOT_PATH_MINIO),                           # MINIO
+        # _safe_mtime(SNAPSHOT_PATH_LOCAL),                         # LOCAL
         _safe_mtime(Path(__file__)),
     )
     cache_mtime = _safe_mtime(METRO_MAP_CACHE_PATH)
@@ -1302,12 +1302,12 @@ def get_metro_dashboard_context() -> dict:
         }
         
     ### MINIO
-    # metrics = _read_json(METRICS_PATH_MINIO, {})
-    # importance = _read_json(IMPORTANCE_PATH_MINIO, [])
+    metrics = _read_json(METRICS_PATH_MINIO, {})
+    importance = _read_json(IMPORTANCE_PATH_MINIO, [])
 
     ### LOCAL
-    metrics = _read_json(METRICS_PATH_LOCAL, [])
-    importance = _read_json(IMPORTANCE_PATH_LOCAL, [])
+    # metrics = _read_json(METRICS_PATH_LOCAL, [])
+    # importance = _read_json(IMPORTANCE_PATH_LOCAL, [])
 
     top_line = snapshot.iloc[0].to_dict() if not snapshot.empty else None
     line_group_cards = _build_line_group_cards(snapshot)
