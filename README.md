@@ -224,4 +224,6 @@ ACCESS_KEY=TU_ACCESS_KEY
 SECRET_KEY=TU_SECRET_KEY
 ```
 
+Tambien hace falta estar conectado a la red de la Universidad Complutense de Madrid o tener acceso al servidor MinIO.
+
 **Última actualización:** Abril 2026
