@@ -51,12 +51,12 @@ Existen 3 formas diferentes de ejecutar la aplicación según tus necesidades:
 **Lo más rápido y fácil.** No requiere clonar el repositorio ni instalar dependencias.
 
 ```bash
-docker run -p 5000:5000 mariogradocker/boostmobility-app
+docker run -p 5000:5000 mariogradocker/boostmobility-app:latest
 ```
 
 **Si el puerto 5000 está ocupado**, redirige a otro:
 ```bash
-docker run -p 8080:5000 mariogradocker/boostmobility-app
+docker run -p 8080:5000 mariogradocker/boostmobility-app:latest
 ```
 *(La aplicación estará en `http://localhost:8080`)*
 
