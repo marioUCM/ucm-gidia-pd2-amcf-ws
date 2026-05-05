@@ -60,6 +60,9 @@ docker run -p 8080:5000 mariogradocker/boostmobility-app:latest
 ```
 *(La aplicación estará en `http://localhost:8080`)*
 
+Si no carga (ejecutas el comando y muere sin mostrar nada) el problema seguramente sea un limite de RAM muy bajo.
+Solución: Docker Desktop -> Settings -> Resources -> Memory
+
 ---
 
 ### Opción 2: Local con uv + MinIO (Recomendado para desarrollo)
