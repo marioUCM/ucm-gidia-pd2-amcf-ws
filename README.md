@@ -51,14 +51,17 @@ Existen 3 formas diferentes de ejecutar la aplicación según tus necesidades:
 **Lo más rápido y fácil.** No requiere clonar el repositorio ni instalar dependencias.
 
 ```bash
-docker run -p 5000:5000 mariogradocker/boostmobility-app
+docker run -p 5000:5000 mariogradocker/boostmobility-app:latest
 ```
 
 **Si el puerto 5000 está ocupado**, redirige a otro:
 ```bash
-docker run -p 8080:5000 mariogradocker/boostmobility-app
+docker run -p 8080:5000 mariogradocker/boostmobility-app:latest
 ```
 *(La aplicación estará en `http://localhost:8080`)*
+
+Si no carga (ejecutas el comando y muere sin mostrar nada) el problema seguramente sea un limite de RAM muy bajo.
+Solución: Docker Desktop -> Settings -> Resources -> Memory
 
 ---
 
@@ -223,5 +226,7 @@ Crea un archivo '.env' en la raiz con el siguiente contenido:
 ACCESS_KEY=TU_ACCESS_KEY
 SECRET_KEY=TU_SECRET_KEY
 ```
+
+Es necesario estar conectado a la red de la Universidad Complutense de Madrid o tener acceso al servidor MinIO.
 
 **Última actualización:** Abril 2026
