@@ -1,23 +1,23 @@
-# 📊 UCM GIDIA - Análisis y Predicción de Datos
+# UCM GIDIA - Análisis y Predicción de Datos
 
 Una aplicación web basada en **Flask** para análisis, visualización y predicción de datos con múltiples módulos especializados. El proyecto utiliza modelos de Machine Learning y proporciona una interfaz interactiva para explorar datos de demanda, transporte público, eventos, análisis económico y propinas.
 
-## ✨ Características Principales
+## Características Principales
 
-- 🚀 **Múltiples módulos de análisis**:
-  - 📈 **Demanda**: Predicción de demanda con modelos entrenados
-  - 🚇 **Metro/Subway**: Análisis de transporte público con mapas interactivos
-  - 🎉 **Eventos**: Datos y análisis de eventos
-  - 💰 **Económico**: Análisis económico y financiero
-  - 💵 **Propinas**: Análisis de patrones de propinas
+- **Múltiples módulos de análisis**:
+  - **Demanda**: Predicción de demanda con modelos entrenados
+  - **Metro/Subway**: Análisis de transporte público con mapas interactivos
+  - **Eventos**: Datos y análisis de eventos
+  - **Económico**: Análisis económico y financiero
+  - **Propinas**: Análisis de patrones de propinas
 
-- 🤖 **Machine Learning**: Modelos LightGBM pre-entrenados para predicciones
-- 🗺️ **Visualizaciones Interactivas**: Mapas con Folium y gráficos con Plotly
-- 📦 **Almacenamiento en la Nube**: Integración con MinIO para gestión de datos
-- 🐳 **Containerización**: Dockerfile incluido para fácil despliegue
-- 🎨 **Interfaz moderna**: Interfaz web responsive con CSS personalizado
+- **Machine Learning**: Modelos LightGBM pre-entrenados para predicciones
+- **Visualizaciones Interactivas**: Mapas con Folium y gráficos con Plotly
+- **Almacenamiento en la Nube**: Integración con MinIO para gestión de datos
+- **Containerización**: Dockerfile incluido para fácil despliegue
+- **Interfaz moderna**: Interfaz web responsive con CSS personalizado
 
-## 📋 Requisitos Previos
+## Requisitos Previos
 
 - **Python 3.13+**
 - **Git**
@@ -25,7 +25,7 @@ Una aplicación web basada en **Flask** para análisis, visualización y predicc
 - **Docker** (opcional, para containerización)
 - Acceso a **MinIO** (opcional, para datos en la nube)
 
-## 🚀 Instalación
+## Instalación
 
 ### 1. Clonar el repositorio
 
@@ -42,27 +42,30 @@ pip install uv
 uv sync
 ```
 
-## 🏃 Ejecución
+## Ejecución
 
 Existen 3 formas diferentes de ejecutar la aplicación según tus necesidades:
 
-### Opción 1️⃣: Docker (Más Rápido - Recommended)
+### Opción 1: Docker (Más Rápido - Recommended)
 
 **Lo más rápido y fácil.** No requiere clonar el repositorio ni instalar dependencias.
 
 ```bash
-docker run -p 5000:5000 mariogradocker/boostmobility-app
+docker run -p 5000:5000 mariogradocker/boostmobility-app:latest
 ```
 
 **Si el puerto 5000 está ocupado**, redirige a otro:
 ```bash
-docker run -p 8080:5000 mariogradocker/boostmobility-app
+docker run -p 8080:5000 mariogradocker/boostmobility-app:latest
 ```
 *(La aplicación estará en `http://localhost:8080`)*
 
+Si no carga (ejecutas el comando y muere sin mostrar nada) el problema seguramente sea un limite de RAM muy bajo.
+Solución: Docker Desktop -> Settings -> Resources -> Memory
+
 ---
 
-### Opción 2️⃣: Local con uv + MinIO (Recomendado para desarrollo)
+### Opción 2: Local con uv + MinIO (Recomendado para desarrollo)
 
 **Clonas el repo y usas los datos directamente desde MinIO en la nube** (no necesitas descargar la carpeta de datos).
 
@@ -75,7 +78,7 @@ cd ucm-gidia-pd2-amcf-ws
 pip install uv
 uv sync
 
-# 3. Configurar variables de entorno (ver sección 🔐 Abajo)
+# 3. Configurar variables de entorno (ver sección Variables de Entorno)
 # Crear archivo .env con las credenciales de MinIO
 
 # 4. Ejecutar la aplicación
@@ -86,7 +89,7 @@ uv run python -m web.app
 
 ---
 
-### Opción 3️⃣: Local Completo (Sin Docker ni MinIO)
+### Opción 3: Local Completo (Sin Docker ni MinIO)
 
 **Clonas el repo, usas uv y descargas todos los datos localmente desde [Google Drive](https://drive.google.com/drive/folders/1dVaG5wBnSt_7TkzQL_85iCKjOYrGUrpq?usp=drive_link).**
 
@@ -115,18 +118,18 @@ uv run python -m web.app
 
 ---
 
-## 📊 Comparativa de Opciones
+## Comparativa de Opciones
 
 | Criterio | Docker | uv + MinIO | Local Completo |
 |----------|--------|-----------|----------------|
-| 💾 **Espacio en disco** | Mínimo | ~665 MB | ~400 MB+ |
-| 🌐 **Necesita conexión** | ✅ Sí | ✅ Sí (MinIO) | ❌ No |
-| 🔧 **Para desarrollo** | ❌ No recomendado | ✅ Sí | ✅ Sí |
-| 🚀 **Producción** | ✅ Recomendado | ❌ No | ❌ No |
+| **Espacio en disco** | ~570 MB | ~665 MB | ~1.1 GB+ |
+| **Necesita conexión** | ✅ Sí | ✅ Sí (MinIO) | ❌ No |
+| **Para desarrollo** | ❌ No recomendado | ✅ Sí | ✅ Sí |
+| **Producción** | ✅ Recomendado | ❌ No | ❌ No |
 
 La aplicación estará disponible en `http://localhost:5000` (o en el puerto que especifiques)
 
-## 📁 Estructura del Proyecto
+## Estructura del Proyecto
 
 ```
 .
@@ -170,12 +173,12 @@ La aplicación estará disponible en `http://localhost:5000` (o en el puerto que
 ├── utils/                        # Funciones auxiliares globales
 │   └── read_from_minio.py        # Lectura desde MinIO
 ├── Dockerfile                    # Configuración Docker
-├── pyproject.toml               # Dependencias del proyecto
-├── uv.lock                      # Lock file de uv
-└── README.md                    # Este archivo
+├── pyproject.toml                # Dependencias del proyecto
+├── uv.lock                       # Lock file de uv
+└── README.md                     # Este archivo
 ```
 
-## 🔧 Dependencias Principales
+## Dependencias Principales
 
 | Dependencia | Versión | Propósito |
 |------------|---------|----------|
@@ -191,7 +194,7 @@ La aplicación estará disponible en `http://localhost:5000` (o en el puerto que
 
 Para la lista completa, consulta [pyproject.toml](pyproject.toml).
 
-## 📡 API Endpoints
+## API Endpoints
 
 ### Rutas Principales
 
@@ -205,7 +208,7 @@ Para la lista completa, consulta [pyproject.toml](pyproject.toml).
 | `/tips` | GET, POST | Análisis de propinas |
 
 
-## 👥 Autores
+## Autores
 
 - **Universidad Complutense de Madrid (UCM)**
 - [Mario Granados Guerrero](https://github.com/marioUCM)
@@ -213,7 +216,7 @@ Para la lista completa, consulta [pyproject.toml](pyproject.toml).
 - [Carlos Vallejo Ros](https://github.com/carlosvallejo23)
 - [Alvaro Alonso Ortega](https://github.com/Alalonsoor)
 
-## 🔐 Variables de Entorno
+## Variables de Entorno
 
 La aplicación requiere las siguientes variables de entorno para usar MinIO.
 
@@ -223,5 +226,7 @@ Crea un archivo '.env' en la raiz con el siguiente contenido:
 ACCESS_KEY=TU_ACCESS_KEY
 SECRET_KEY=TU_SECRET_KEY
 ```
+
+Es necesario estar conectado a la red de la Universidad Complutense de Madrid o tener acceso al servidor MinIO.
 
 **Última actualización:** Abril 2026
