@@ -40,7 +40,7 @@ def grafica1(topN=25,as_sjon=False):
     )
 
     fig.update_layout(
-        title=f'TOP {topN} Códigos Postales más y menos demandados de NYC',
+        title=f'TOP {topN} Códigos Postales más y menos demandados',
         xaxis_title='Numero de Viajes',
         yaxis_title='ZIP Code',
         yaxis={'categoryorder': 'total ascending'},
@@ -70,7 +70,7 @@ def grafica2(topN=25,as_sjon=False):
     )
 
     fig.update_layout(
-        title=f'TOP {topN} Códigos Postales más y menos generosos de NYC',
+        title=f'TOP {topN} Códigos Postales más y menos generosos',
         xaxis_title='Propina Media ($)',
         yaxis_title='ZIP Code',
         yaxis={'categoryorder': 'total ascending'}, # Ordena correctamente de mayor a menor
@@ -101,7 +101,7 @@ def grafica3(topN=25,as_sjon=False):
     )
 
     fig.update_layout(
-        title=f'TOP {topN} Códigos Postales más y menos generosos de NYC',
+        title=f'TOP {topN} Códigos Postales mayor y menor ingreso',
         xaxis_title='Ingreso Medio ($)',
         yaxis_title='ZIP Code',
         yaxis={'categoryorder': 'total ascending'}, # Ordena correctamente de mayor a menor
