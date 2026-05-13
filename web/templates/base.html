@@ -2,43 +2,100 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>BoostMobility</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="{% block meta_description %}BoostMobility: panel de análisis y predicción para conductores de taxi y VTC. Demanda, propinas, metro, economía y eventos.{% endblock %}">
+    <meta name="theme-color" content="#14161c">
+    <title>{% block title %}BoostMobility{% endblock %}</title>
 
-    <!-- Favicon (full support) -->
     <link rel="icon" href="/favicon.ico">
     <link rel="shortcut icon" href="/favicon.ico">
     <link rel="apple-touch-icon" sizes="180x180" href="{{ url_for('static', filename='img/apple-touch-icon.png') }}">
     <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='img/favicon-32x32.png') }}">
     <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='img/favicon-16x16.png') }}">
 
-    <!-- CSS -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 
-    <!-- Fuente -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 
 <body>
 
-    <!--NAVBAR -->
-    <nav class="navbar">
-        <div class="logo">
-            Boost<span>Mobility</span>
-        </div>
+    <a class="skip-link" href="#contenido-principal">Ir al contenido</a>
 
-        <div class="nav-links">
-            <a href="/">Inicio</a>
-            <a href="/demanda">Demanda</a>
-            <a href="/tips">Propinas</a>
-            <a href="/metro">Metro</a>
-            <a href="/economico">Económico</a>
-            <a href="/eventos">Eventos</a>
-        </div>
-    </nav>
+    <header class="site-header">
+        <nav class="navbar" aria-label="Principal">
+            <a href="/" class="logo" aria-label="BoostMobility — inicio">
+                Boost<span>Mobility</span>
+            </a>
 
-    <!--CONTENIDO -->
-    <div class="container">
+            <button type="button" class="nav-toggle" aria-expanded="false" aria-controls="primary-nav" aria-label="Abrir menú">
+                <span class="nav-toggle-bar" aria-hidden="true"></span>
+                <span class="nav-toggle-bar" aria-hidden="true"></span>
+                <span class="nav-toggle-bar" aria-hidden="true"></span>
+            </button>
+
+            <div class="nav-links" id="primary-nav">
+                <a href="/" class="{% if request.path == '/' %}is-active{% endif %}">Inicio</a>
+                <a href="/demanda" class="{% if request.path.startswith('/demanda') %}is-active{% endif %}">Demanda</a>
+                <a href="/tips" class="{% if request.path.startswith('/tips') %}is-active{% endif %}">Propinas</a>
+                <a href="/metro" class="{% if request.path.startswith('/metro') %}is-active{% endif %}">Metro</a>
+                <a href="/economico" class="{% if request.path.startswith('/economico') %}is-active{% endif %}">Económico</a>
+                <a href="/eventos" class="{% if request.path.startswith('/eventos') %}is-active{% endif %}">Eventos</a>
+            </div>
+        </nav>
+    </header>
+
+    <main id="contenido-principal" class="container site-main" tabindex="-1">
         {% block content %}{% endblock %}
-    </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="site-footer-inner">
+            <div class="site-footer-brand">
+                <strong>BoostMobility</strong>
+                <p>Herramientas de análisis para planificar mejor tus servicios.</p>
+            </div>
+            <nav class="site-footer-nav" aria-label="Pie de página">
+                <a href="/demanda">Demanda</a>
+                <a href="/tips">Propinas</a>
+                <a href="/metro">Metro</a>
+                <a href="/economico">Económico</a>
+                <a href="/eventos">Eventos</a>
+            </nav>
+        </div>
+        <p class="site-footer-copy">© {% block footer_year %}2026{% endblock %} BoostMobility</p>
+    </footer>
+
+    <script>
+    (function () {
+        var btn = document.querySelector('.nav-toggle');
+        var nav = document.getElementById('primary-nav');
+        if (!btn || !nav) return;
+
+        function setOpen(open) {
+            nav.classList.toggle('nav-links--open', open);
+            btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+            btn.setAttribute('aria-label', open ? 'Cerrar menú' : 'Abrir menú');
+        }
+
+        btn.addEventListener('click', function () {
+            setOpen(!nav.classList.contains('nav-links--open'));
+        });
+
+        nav.querySelectorAll('a').forEach(function (a) {
+            a.addEventListener('click', function () { setOpen(false); });
+        });
+
+        window.addEventListener('resize', function () {
+            if (window.matchMedia('(min-width: 768px)').matches) setOpen(false);
+        });
+
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape') setOpen(false);
+        });
+    })();
+    </script>
 </body>
 </html>

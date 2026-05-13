@@ -1,41 +1,69 @@
 {% extends "base.html" %}
 
+{% block title %}Inicio — BoostMobility{% endblock %}
+
+{% block meta_description %}Explora demanda, propinas, metro, datos económicos y eventos en un solo panel pensado para conductores de taxi y VTC.{% endblock %}
+
 {% block content %}
 
-<div class="hero">
+<div class="layout-home">
 
-    <!-- LOGO / TITULO -->
-    <h1>Boost<span>Mobility</span></h1>
+<section class="hero" aria-labelledby="hero-heading">
+    <div class="hero-inner">
+        <p class="hero-kicker">Panel de análisis predictivo</p>
+        <h1 id="hero-heading">Decisiones más claras, <span class="hero-highlight">viaje a viaje</span></h1>
+        <p class="hero-lead">
+            Consulta modelos y mapas en un entorno sencillo. Elige un módulo y obtén contexto útil para organizar tu jornada.
+        </p>
+        <ul class="hero-trust" aria-label="Características del panel">
+            <li>Interfaz unificada</li>
+            <li>Visualizaciones interactivas</li>
+            <li>Acceso rápido por sección</li>
+        </ul>
+    </div>
 
-    <p class="subtitle">
-        Predicciones inteligentes para conductores de taxi y VTC
-    </p>
+    <h2 class="modules-heading">Módulos disponibles</h2>
+    <p class="modules-intro">Cada herramienta abre en la misma barra de navegación para que no pierdas el contexto.</p>
 
-    <!-- OPCIONES PRINCIPALES -->
     <div class="cards">
 
-        <!-- DEMANDA -->
         <a href="/demanda" class="card">
-            <h2>🚕</h2>
-            <h3>Predecir Demanda</h3>
-            <p>Descubre cuándo y dónde habrá más clientes</p>
+            <span class="card-icon-wrap" aria-hidden="true"><span class="card-icon">🚕</span></span>
+            <h3 class="card-title">Demanda</h3>
+            <p class="card-desc">Estima la actividad por zona, fecha y hora para orientar desplazamientos.</p>
+            <span class="card-cta">Abrir módulo<span class="card-cta-arrow" aria-hidden="true"></span></span>
         </a>
 
-        <!-- PROPINAS -->
         <a href="/tips" class="card">
-            <h2>💰</h2>
-            <h3>Predecir Propinas</h3>
-            <p>Optimiza tus ingresos en cada viaje</p>
+            <span class="card-icon-wrap" aria-hidden="true"><span class="card-icon">💰</span></span>
+            <h3 class="card-title">Propinas</h3>
+            <p class="card-desc">Explora patrones de propinas y factores asociados a cada trayecto.</p>
+            <span class="card-cta">Abrir módulo<span class="card-cta-arrow" aria-hidden="true"></span></span>
         </a>
 
-        <!-- METRO -->
         <a href="/metro" class="card">
-            <h2>🚇</h2>
-            <h3>Averías Metro</h3>
-            <p>Anticipa incidencias en el transporte</p>
+            <span class="card-icon-wrap" aria-hidden="true"><span class="card-icon">🚇</span></span>
+            <h3 class="card-title">Metro</h3>
+            <p class="card-desc">Revisa incidencias y su posible impacto en la movilidad urbana.</p>
+            <span class="card-cta">Abrir módulo<span class="card-cta-arrow" aria-hidden="true"></span></span>
+        </a>
+
+        <a href="/economico" class="card">
+            <span class="card-icon-wrap" aria-hidden="true"><span class="card-icon">📊</span></span>
+            <h3 class="card-title">Económico</h3>
+            <p class="card-desc">Mapas y métricas para contextualizar rentabilidad y entorno económico.</p>
+            <span class="card-cta">Abrir módulo<span class="card-cta-arrow" aria-hidden="true"></span></span>
+        </a>
+
+        <a href="/eventos" class="card">
+            <span class="card-icon-wrap" aria-hidden="true"><span class="card-icon">📽️</span></span>
+            <h3 class="card-title">Eventos</h3>
+            <p class="card-desc">Cruza eventos con demanda de taxis para detectar picos de interés.</p>
+            <span class="card-cta">Abrir módulo<span class="card-cta-arrow" aria-hidden="true"></span></span>
         </a>
 
     </div>
+</section>
 
 </div>
 
