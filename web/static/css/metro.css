@@ -777,3 +777,16 @@ tbody tr:hover {
         min-height: 620px;
     }
 }
+
+@media (max-width: 600px) {
+    .prediction-map-live iframe {
+        min-height: 50vh;
+        height: 50vh;
+    }
+
+    .prediction-map-live .folium-map,
+    .prediction-map-live .leaflet-container {
+        min-height: 50vh !important;
+        height: 50vh !important;
+    }
+}

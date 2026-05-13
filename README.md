@@ -127,7 +127,7 @@ uv run python -m web.app
 | **Para desarrollo** | ❌ No recomendado | ✅ Sí | ✅ Sí |
 | **Producción** | ✅ Recomendado | ❌ No | ❌ No |
 
-La aplicación estará disponible en `http://localhost:5000` (o en el puerto que especifiques)
+La aplicación estará disponible en `http://localhost:5000` (o en el puerto que especifiques). Al arrancar con `python -m web.app` o `uv run python -m web.app`, la consola muestra también una URL con la **IP de tu red local** para abrirla desde el **móvil en la misma Wi‑Fi** (el servidor usa `0.0.0.0` por defecto). Variables opcionales: `FLASK_RUN_HOST`, `FLASK_RUN_PORT`, `FLASK_DEBUG`.
 
 ## Estructura del Proyecto
 

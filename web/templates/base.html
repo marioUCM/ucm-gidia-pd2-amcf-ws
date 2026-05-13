@@ -79,6 +79,7 @@
             nav.classList.toggle('nav-links--open', open);
             btn.setAttribute('aria-expanded', open ? 'true' : 'false');
             btn.setAttribute('aria-label', open ? 'Cerrar menú' : 'Abrir menú');
+            document.body.classList.toggle('nav-drawer-open', open);
         }
 
         btn.addEventListener('click', function () {
@@ -90,7 +91,9 @@
         });
 
         window.addEventListener('resize', function () {
-            if (window.matchMedia('(min-width: 768px)').matches) setOpen(false);
+            if (window.matchMedia('(min-width: 768px)').matches) {
+                setOpen(false);
+            }
         });
 
         document.addEventListener('keydown', function (e) {

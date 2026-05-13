@@ -23,7 +23,6 @@ body {
 
 .navbar {
     padding-top: max(4px, env(safe-area-inset-top, 0px));
-    padding-bottom: max(4px, env(safe-area-inset-bottom, 0px));
     min-height: max(var(--header-h, 60px), calc(var(--header-h, 60px) * 0.5 + env(safe-area-inset-top, 0px)));
 }
 
@@ -78,12 +77,33 @@ body {
     .card {
         min-height: 0;
     }
+
+    .plot-slot,
+    .js-plotly-plot {
+        max-width: 100%;
+    }
+
+    .analytics-page .plot-slot,
+    .module-page .plot-slot {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        overscroll-behavior-x: contain;
+    }
+
+    .map-container {
+        height: clamp(260px, 52vh, 500px);
+    }
+
+    .map-legend {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 12px 18px;
+    }
 }
 
-/* Menú abierto: reduce scroll de fondo (especialmente iOS) */
+/* Menú abierto: evita scroll del fondo */
 body.nav-drawer-open {
     overflow: hidden;
-    touch-action: none;
 }
 
 body.nav-drawer-open .site-main,
@@ -99,11 +119,22 @@ body.nav-drawer-open .site-header * {
 @media (min-width: 768px) {
     body.nav-drawer-open {
         overflow: unset;
-        touch-action: unset;
     }
 
     body.nav-drawer-open .site-main,
     body.nav-drawer-open .site-footer {
         pointer-events: auto;
+    }
+}
+
+@media (max-width: 480px) {
+    .module-page {
+        padding-left: max(10px, env(safe-area-inset-left, 0px));
+        padding-right: max(10px, env(safe-area-inset-right, 0px));
+    }
+
+    .chart-toolbar label {
+        width: 100%;
+        text-align: center;
     }
 }
