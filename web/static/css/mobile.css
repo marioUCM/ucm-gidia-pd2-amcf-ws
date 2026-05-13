@@ -78,16 +78,29 @@ body {
         min-height: 0;
     }
 
-    .plot-slot,
-    .js-plotly-plot {
+    .plot-slot {
+        max-width: 100%;
+        width: 100%;
+        box-sizing: border-box;
+        /* Altura mínima en unidades de viewport: evita gráficas “aplatanadas” en iPhone */
+        min-height: min(72vw, 420px);
+        -webkit-transform: translateZ(0);
+        transform: translateZ(0);
+    }
+
+    .plot-slot .plotly-graph-div {
         max-width: 100%;
     }
 
     .analytics-page .plot-slot,
     .module-page .plot-slot {
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch;
-        overscroll-behavior-x: contain;
+        overflow-x: hidden;
+        overflow-y: visible;
+    }
+
+    .plot-slot .modebar-container {
+        top: 2px !important;
+        right: 2px !important;
     }
 
     .map-container {

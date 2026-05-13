@@ -10,11 +10,7 @@
     padding: 0 clamp(10px, 2vw, 18px) clamp(16px, 2.5vw, 22px);
 }
 
-.analytics-page .plot-slot .js-plotly-plot {
-    width: 100% !important;
-}
-
 .analytics-page .grid > .plot-slot,
 .analytics-page .static-section > .plot-slot {
-    min-height: 320px;
+    min-height: 280px;
 }

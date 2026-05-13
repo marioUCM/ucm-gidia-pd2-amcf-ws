@@ -34,12 +34,17 @@ _CHART_LAYOUT = {
     "font": dict(family="Inter, system-ui, sans-serif", size=12, color="#14161c"),
     "paper_bgcolor": "rgba(0,0,0,0)",
     "plot_bgcolor": "#f4f5f7",
-    "margin": dict(l=52, r=32, t=56, b=48),
+    "autosize": True,
+    "margin": dict(l=44, r=18, t=48, b=42),
 }
 
 
 def _style_figure(fig):
     fig.update_layout(**_CHART_LAYOUT)
+    fig.update_layout(
+        xaxis=dict(automargin=True),
+        yaxis=dict(automargin=True),
+    )
 
 
 def grafica1(topN=25, as_json=False):
