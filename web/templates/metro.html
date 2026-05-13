@@ -1,13 +1,23 @@
 {% extends "base.html" %}
 
+{% block title %}Metro — BoostMobility{% endblock %}
+
+{% block meta_description %}
+Riesgo de alertas por línea y grupo, métricas del modelo e importancia de variables, con mapa interactivo.
+{% endblock %}
+
 {% block content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/module-shell.css') }}">
 <link rel="stylesheet" href="{{ url_for('static', filename='css/metro.css') }}">
 
+<div class="module-page">
 <div class="metro-page">
-    <div class="metro-header">
-        <h1>Riesgo de <span>alertas por linea</span></h1>
-        <p>Modelo preentrenado por linea para estimar incidencias en la proxima hora.</p>
-    </div>
+
+    <header class="page-hero metro-header">
+        <p class="page-kicker">Módulo metro</p>
+        <h1 class="page-title">Riesgo de <span class="page-accent">alertas por línea</span></h1>
+        <p class="page-lead">Modelo preentrenado por línea para estimar incidencias en la próxima hora. Usa las tarjetas para resaltar líneas en el mapa.</p>
+    </header>
 
     <div class="section">
         <div class="section-header">
@@ -221,6 +231,7 @@
             </div>
         </div>
     </div>
+</div>
 </div>
 
 <script src="{{ url_for('static', filename='js/metro.js') }}"></script>

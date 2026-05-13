@@ -1,42 +1,60 @@
 {% extends "base.html" %}
 
+{% block title %}Análisis económico — BoostMobility{% endblock %}
+
+{% block meta_description %}
+Mapa coroplético económico de Nueva York y gráficas de volumen de viajes, propinas e ingresos por código postal.
+{% endblock %}
+
 {% block content %}
 
+<link rel="stylesheet" href="{{ url_for('static', filename='css/module-shell.css') }}">
 <link rel="stylesheet" href="{{ url_for('static', filename='css/money.css') }}">
 <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 
-<div class="container">
-    <h1>Análisis de Económico de NY</h1>
+<div class="module-page analytics-page">
 
-    <div class="map-coropletico-container">
-        <div class="map-coropletico-header">
-            <h1>🚕 Mapa Económico y de <span>Propinas 💰​</span></h1>
-            <p>Explora el poder adquisitivo y las zonas más rentables de Nueva York</p>
+    <header class="page-hero">
+        <p class="page-kicker">Módulo económico</p>
+        <h1 class="page-title">Mapa y métricas <span class="page-accent">por código postal</span></h1>
+        <p class="page-lead">
+            Explora el contexto económico y la actividad de viajes en el mapa. Las gráficas inferiores resaltan extremos y distribuciones clave.
+        </p>
+    </header>
+
+    <section class="surface-panel map-panel" aria-labelledby="money-map-title">
+        <div class="map-panel__head">
+            <h2 id="money-map-title">Mapa económico y propinas</h2>
+            <p>Coropleta con indicadores agregados por zona postal.</p>
         </div>
-
-        <div class="map-coropletico-wrapper">
-            {{ mapa_coropletico | safe }}
+        <div class="map-panel__frame">
+            <div class="map-coropletico-wrapper map-embed">
+                {{ mapa_coropletico | safe }}
+            </div>
         </div>
-    </div>
+    </section>
 
-    <div class="interactive-section">
-        <div class="controls">
+    <section class="surface-panel" aria-labelledby="money-charts-live">
+        <h2 id="money-charts-live" class="visually-hidden">Gráficas interactivas</h2>
+        <div class="chart-toolbar">
+            <label for="input-topN">Mostrar TOP</label>
             <input type="number" id="input-topN" value="{{ topN_actual }}" min="5" max="50" step="5">
-            <button id="btn-update">Actualizar Gráficas</button>
+            <button type="button" id="btn-update">Actualizar gráficas</button>
         </div>
 
-        <div class="grid">
-            <div id="container-g1">{{ grafica1 | safe }}</div>
-            <div id="container-g2">{{ grafica2 | safe }}</div>
-            <div id="container-g3">{{ grafica3 | safe }}</div>
+        <div class="plot-grid plot-grid--interactive grid">
+            <div id="container-g1" class="plot-slot">{{ grafica1 | safe }}</div>
+            <div id="container-g2" class="plot-slot">{{ grafica2 | safe }}</div>
+            <div id="container-g3" class="plot-slot">{{ grafica3 | safe }}</div>
         </div>
-    </div>
+    </section>
 
-     <div class="static-section">
-        <div id="container-g4">{{ grafica4 | safe }}</div>
-        <div id="container-g5">{{ grafica5 | safe }}</div>
-        <div id="container-g6">{{ grafica6 | safe }}</div>
-    </div>
+    <section class="plot-grid plot-grid--static static-section" aria-labelledby="money-charts-static">
+        <h2 id="money-charts-static" class="visually-hidden">Distribuciones y relaciones</h2>
+        <div id="container-g4" class="plot-slot">{{ grafica4 | safe }}</div>
+        <div id="container-g5" class="plot-slot">{{ grafica5 | safe }}</div>
+        <div id="container-g6" class="plot-slot">{{ grafica6 | safe }}</div>
+    </section>
 
 </div>
 

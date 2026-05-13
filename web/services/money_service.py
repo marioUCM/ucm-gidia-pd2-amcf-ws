@@ -21,7 +21,7 @@ data = gpd.read_parquet(BASE_DIR/"../../data/money/df_mapa.parquet")
 data['ZIP_CODE'] = data['ZIP_CODE'].astype(str)
 
 
-def grafica1(topN=25,as_sjon=False):
+def grafica1(topN=25,as_json=False):
 
 
      # Ordenamos el dataframe por propina de mayor a menor
@@ -47,12 +47,12 @@ def grafica1(topN=25,as_sjon=False):
         coloraxis_showscale=False,
     )
 
-    if as_sjon:
+    if as_json:
         return fig.to_json()
     return fig.to_html(full_html=False, config={'responsive': True})
 
 
-def grafica2(topN=25,as_sjon=False):
+def grafica2(topN=25,as_json=False):
 
     # Ordenamos el dataframe por propina de mayor a menor
     df_ordenado = data.sort_values('propina_media', ascending=False)
@@ -77,13 +77,13 @@ def grafica2(topN=25,as_sjon=False):
         coloraxis_showscale=False,
     )
 
-    if as_sjon:
+    if as_json:
         return fig.to_json()
     return fig.to_html(full_html=False, config={'responsive': True})
 
 
 
-def grafica3(topN=25,as_sjon=False):
+def grafica3(topN=25,as_json=False):
 
     # Ordenamos el dataframe por propina de mayor a menor
     df_ordenado = data.sort_values('ingreso_medio', ascending=False)
@@ -108,7 +108,7 @@ def grafica3(topN=25,as_sjon=False):
         coloraxis_showscale=False,
     )
 
-    if as_sjon:
+    if as_json:
         return fig.to_json()
     return fig.to_html(full_html=False, config={'responsive': True})
     

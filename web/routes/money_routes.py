@@ -36,9 +36,9 @@ def update_graph():
     data = request.get_json()
     n = int(data.get("top_n", 25))
 
-    update_graph1 = grafica1(n,as_sjon=True)
-    update_graph2 = grafica2(n,as_sjon=True)
-    update_graph3 = grafica3(n,as_sjon=True)
+    update_graph1 = grafica1(n, as_json=True)
+    update_graph2 = grafica2(n, as_json=True)
+    update_graph3 = grafica3(n, as_json=True)
 
     return jsonify({
         "updt_g1": update_graph1,

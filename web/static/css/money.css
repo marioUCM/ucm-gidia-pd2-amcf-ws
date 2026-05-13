@@ -1,180 +1,20 @@
-/* --- BASE Y LAYOUT --- */
-body {
-    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-    background-color: #f9f9f9; /* Fondo claro para que destaquen las sombras */
-    margin: 0;
-    color: #111;
-}
+/* Módulo económico: complementos a module-shell.css */
 
-.container {
-    max-width: 1350px;
-    margin: 60px auto; /* Centrado como en tu layout principal */
-    padding: 0 20px;
-}
-
-/* --- TÍTULOS --- */
-.container > h1 {
-    text-align: center;
-    font-size: 48px;
-    margin-bottom: 50px;
-}
-
-.container > h1 span, .map-pelis-header h1 span {
-    color: #ffd60a; /* Tu amarillo característico */
-}
-
-/* --- SECCIONES PRINCIPALES (Estilo .model-section) --- */
-.map-coropletico-container, .interactive-section {
-    background: white;
-    padding: 35px;
-    border-radius: 24px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.08); /* Sombra suave idéntica a la tuya */
-    margin-bottom: 40px;
-    width: 100%;
-    box-sizing: border-box;
-}
-
-/* --- MAPA --- */
-.map-coropletico-header {
-    text-align: center;
-    margin-bottom: 25px;
-}
-
-.map-coropletico-header h1 {
-    font-size: 28px;
-    margin: 0 0 8px 0;
-}
-
-.map-coropletico-header p {
-    color: #777;
-    font-size: 15px;
-    margin: 0;
-}
-
-.map-coropletico-wrapper {
+.analytics-page .map-coropletico-wrapper {
     width: 100%;
     height: 500px;
-    border-radius: 16px;
-    overflow: hidden;
-    margin-top: 15px;
-    border: 1px solid #eee;
-}
-
-/* --- CONTROLES (Estilo .input-group y .btn-primary) --- */
-.controls {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 15px;
-    margin-bottom: 30px;
-    padding-bottom: 30px;
-    border-bottom: 1px solid #eee; /* Línea separadora limpia */
-}
-
-.controls label {
-    font-weight: 500;
-    font-size: 15px;
-}
-
-.controls input[type="number"] {
-    padding: 12px;
-    border-radius: 10px;
-    border: 1px solid #ddd;
-    font-size: 14px;
-    width: 80px;
-    text-align: center;
-    outline: none;
-    transition: all 0.2s ease;
-}
-
-.controls input[type="number"]:focus {
-    border-color: #ffd60a;
-}
-
-.controls button {
-    padding: 14px 30px;
-    background: #ffd60a;
-    border: none;
-    border-radius: 12px;
-    font-weight: bold;
-    cursor: pointer;
-    font-size: 16px;
-    transition: background 0.3s ease;
-}
-
-.controls button:hover {
-    background: #e6c200;
-}
-
-.controls button:disabled {
-    background: #eee;
-    color: #888;
-    cursor: not-allowed;
-}
-
-/* --- CUADRÍCULA DE GRÁFICAS --- */
-.grid, .static-section {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr)); 
-    gap: 30px;
-    width: 100%;
-}
-
-.static-section {
-    margin-bottom: 60px;
-}
-
-/* --- TARJETAS INDIVIDUALES DE GRÁFICAS --- */
-/* Las gráficas interactivas van dentro de una sección blanca, así que les damos un fondo más suave */
-.grid > div {
-    background: #fafafa;
-    padding: 20px;
-    border-radius: 20px;
-    border: 1px solid #eee;
-    transition: all 0.25s ease;
-
-    min-width: 0; 
-    max-width: 100%;
     overflow: hidden;
 }
 
-/* Las estáticas van sueltas, así que les damos el formato de "carta" principal */
-.static-section > div {
-    background: white;
-    padding: 35px;
-    border-radius: 24px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
-    transition: all 0.25s ease;
-    
-    min-width: 0; 
-    max-width: 100%;
-    overflow: hidden;
+.analytics-page .surface-panel .plot-grid {
+    padding: 0 clamp(10px, 2vw, 18px) clamp(16px, 2.5vw, 22px);
 }
 
-/* Efecto hover estilo .top-zone-item */
-.grid > div:hover, .static-section > div:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 12px 25px rgba(0,0,0,0.1);
+.analytics-page .plot-slot .js-plotly-plot {
+    width: 100% !important;
 }
 
-/* --- RESPONSIVE --- */
-@media (max-width: 900px) {
-    .grid, .static-section {
-        grid-template-columns: 1fr;
-    }
-    
-    .controls {
-        flex-direction: column;
-        width: 100%;
-    }
-    
-    .controls input[type="number"] {
-        width: 100%;
-        max-width: 300px;
-    }
-
-    .controls button {
-        width: 100%;
-        max-width: 300px;
-    }
+.analytics-page .grid > .plot-slot,
+.analytics-page .static-section > .plot-slot {
+    min-height: 320px;
 }

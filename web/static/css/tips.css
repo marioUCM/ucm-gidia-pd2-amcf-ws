@@ -1,14 +1,23 @@
 /* Estilos Generales y Container */
 .tips-container {
     max-width: 1400px;
-    margin: 40px auto;
-    padding: 0 30px;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0 auto;
+    padding: 0;
 }
 
-.header { text-align: center; margin-bottom: 50px; }
-.header h1 { font-size: 42px; font-weight: 800; }
-.header h1 span { color: #ffd60a; }
+.header.page-hero {
+    margin-bottom: clamp(28px, 4vw, 44px);
+}
+
+.header h1,
+.header .page-title {
+    font-weight: 800;
+}
+
+.header h1 span,
+.header .page-accent {
+    color: var(--color-accent-hover, #c9a227);
+}
 
 /* EL NUEVO LAYOUT HORIZONTAL */
 .tips-comparison-layout {
@@ -36,12 +45,12 @@
 
 /* Tarjeta Formulario */
 .card-form {
-    background: white;
+    background: var(--color-surface, #fff);
     padding: 30px;
-    border-radius: 28px;
-    box-shadow: 0 15px 40px rgba(0,0,0,0.06);
+    border-radius: var(--radius-xl, 28px);
+    box-shadow: var(--shadow-sm, 0 15px 40px rgba(0, 0, 0, 0.06));
     box-sizing: border-box;
-    border: 1px solid #f0f0f0;
+    border: 1px solid var(--color-border, #f0f0f0);
     width: 100%;
 }
 
@@ -56,7 +65,7 @@
 
 .location-box h3 {
     font-size: 14px; margin-bottom: 12px;
-    border-left: 4px solid #ffd60a; padding-left: 8px;
+    border-left: 4px solid var(--color-accent, #c9a227); padding-left: 8px;
 }
 
 /* Inputs y Grids */
@@ -85,11 +94,14 @@
     cursor: pointer; transition: all 0.3s; letter-spacing: 1px;
 }
 
-.btn-vtc { background: #ffd60a; color: #1a1a1a; }
-.btn-vtc:hover { background: #ffc300; transform: translateY(-2px); }
+.btn-vtc {
+    background: linear-gradient(180deg, #e8c84a 0%, var(--color-accent, #c9a227) 100%);
+    color: #1a1a1a;
+}
+.btn-vtc:hover { filter: brightness(0.96); transform: translateY(-2px); }
 
-.btn-max { background: #1a1a1a; color: #ffd60a; }
-.btn-max:hover { background: #333; transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
+.btn-max { background: #1a1a1a; color: #e8c84a; }
+.btn-max:hover { background: #2a2a2a; transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
 
 /* Resultados Compactos */
 .card-result-compact {
@@ -104,7 +116,7 @@
 .vtc-result h2 { color: #c09c00; }
 
 .max-result { background: #1a1a1a; color: white; border: 1px solid #333; }
-.max-result h2 { color: #ffd60a; }
+.max-result h2 { color: #e8c84a; }
 
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 

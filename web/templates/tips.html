@@ -1,13 +1,23 @@
 {% extends "base.html" %}
 
+{% block title %}Propinas — BoostMobility{% endblock %}
+
+{% block meta_description %}
+Compara predicción de propina entre modelo VTC y taxi según origen, destino, fecha y hora.
+{% endblock %}
+
 {% block content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/module-shell.css') }}">
 <link rel="stylesheet" href="{{ url_for('static', filename='css/tips.css') }}">
 
+<div class="module-page">
 <div class="tips-container">
-    <div class="header">
-        <h1>Análisis <span>de</span> Propina</h1>
-        <p>Optimiza tus rutas comparando ambos modelos de predicción</p>
-    </div>
+
+    <header class="page-hero header">
+        <p class="page-kicker">Módulo propinas</p>
+        <h1 class="page-title">Análisis de <span class="page-accent">propina</span></h1>
+        <p class="page-lead">Compara ambos modelos con los mismos criterios de origen y destino para ver diferencias entre VTC y taxi.</p>
+    </header>
 
     <div class="tips-comparison-layout">
         
@@ -155,6 +165,7 @@
             </div>
         </div>
     </div>
+</div>
 </div>
 
 <script>

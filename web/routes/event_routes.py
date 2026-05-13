@@ -1,5 +1,13 @@
 from flask import Blueprint, render_template,request,jsonify
-from ..services.event_service import grafica1,grafica2,grafica3,grafica4,grafica5,generate_films_taxi_map
+from ..services.event_service import (
+    grafica1,
+    grafica2,
+    grafica3,
+    grafica4,
+    grafica5,
+    grafica6,
+    generate_films_taxi_map,
+)
 
 event = Blueprint("event", __name__)
 
@@ -16,16 +24,19 @@ def event_page():
     grafica3_html = grafica3(topN,as_json=False)
     grafica4_html = grafica4()
     grafica5_html = grafica5()
+    grafica6_html = grafica6()
 
-    return render_template("event.html",
-                            mapa_pelis=mapa_pelis,
-                            grafica1=grafica1_html,
-                            grafica2=grafica2_html,
-                            grafica3=grafica3_html,
-                            grafica4=grafica4_html,
-                            grafica5=grafica5_html,
-                            topN_actual=topN
-                            )
+    return render_template(
+        "event.html",
+        mapa_pelis=mapa_pelis,
+        grafica1=grafica1_html,
+        grafica2=grafica2_html,
+        grafica3=grafica3_html,
+        grafica4=grafica4_html,
+        grafica5=grafica5_html,
+        grafica6=grafica6_html,
+        topN_actual=topN,
+    )
 
 @event.route("/update-graph", methods=["POST"])
 def update_graph():

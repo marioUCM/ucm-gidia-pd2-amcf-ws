@@ -29,7 +29,20 @@ data7 = pd.read_parquet(BASE_DIR / "../../data/films/films_location.parquet")
 # data6 = load_parquet_from_minio("boostmobility/films/df_mapa.parquet")
 # data7 = load_parquet_from_minio("boostmobility/films/films_location.parquet")
 
-def grafica1(topN=25,as_json=False):
+_CHART_LAYOUT = {
+    "template": "plotly_white",
+    "font": dict(family="Inter, system-ui, sans-serif", size=12, color="#14161c"),
+    "paper_bgcolor": "rgba(0,0,0,0)",
+    "plot_bgcolor": "#f4f5f7",
+    "margin": dict(l=52, r=32, t=56, b=48),
+}
+
+
+def _style_figure(fig):
+    fig.update_layout(**_CHART_LAYOUT)
+
+
+def grafica1(topN=25, as_json=False):
 
     comparativa = data1.copy()
 
@@ -55,13 +68,14 @@ def grafica1(topN=25,as_json=False):
     )
 
     # Añadimos una línea vertical en el 0% para referencia clara
-    fig.add_vline(x=0, line_width=2, line_dash="dash", line_color="black")
+    fig.add_vline(x=0, line_width=2, line_dash="dash", line_color="#64748b")
 
     fig.update_layout(
         xaxis_title="Cambio en el tráfico (%)",
         legend_title_text="Efecto del Rodaje",
-        yaxis_showticklabels = False,
+        yaxis_showticklabels=False,
     )
+    _style_figure(fig)
 
     if as_json:
         return fig.to_json()
@@ -69,7 +83,7 @@ def grafica1(topN=25,as_json=False):
     return fig.to_html(full_html=False, config={'responsive': True})
 
 
-def grafica2(topN=25,as_json=False):
+def grafica2(topN=25, as_json=False):
 
     impacto_economico = data2.copy()
     
@@ -99,7 +113,8 @@ def grafica2(topN=25,as_json=False):
         legend_title_text="Efecto del Rodaje",
     )
 
-    fig2.add_vline(x=0, line_dash="dash", line_color="black")
+    fig2.add_vline(x=0, line_dash="dash", line_color="#64748b")
+    _style_figure(fig2)
 
     if as_json:
         return fig2.to_json()
@@ -107,7 +122,7 @@ def grafica2(topN=25,as_json=False):
     return fig2.to_html(full_html=False, config={'responsive': True})
 
 
-def grafica3(topN=25,as_json=False):
+def grafica3(topN=25, as_json=False):
 
     impacto_velocidad = data3.copy()
     
@@ -137,8 +152,8 @@ def grafica3(topN=25,as_json=False):
         legend_title_text="Efecto del Rodaje",
     )
 
-    fig.add_vline(x=0, line_dash="dash")
-
+    fig.add_vline(x=0, line_dash="dash", line_color="#64748b")
+    _style_figure(fig)
 
     if as_json:
         return fig.to_json()
@@ -164,15 +179,17 @@ def grafica4():
     )
 
     fig.update_xaxes(dtick=1)
+    _style_figure(fig)
 
     return fig.to_html(full_html=False, config={'responsive': True})
 
-def grafica5():
 
-    data5["hour"] = data5["date_hour"].dt.hour
+def grafica5():
+    df = data5.copy()
+    df["hour"] = df["date_hour"].dt.hour
 
     hourly_effect = (
-        data5.groupby(["hour", "has_event"])["trip_count"]
+        df.groupby(["hour", "has_event"])["trip_count"]
         .mean()
         .reset_index()
     )
@@ -184,12 +201,38 @@ def grafica5():
         color="has_event",
         markers=True,
         title="Demanda Media por Hora (Con vs Sin Evento)",
-        labels={"trip_count": "Viajes medios"}
+        labels={"trip_count": "Viajes medios"},
     )
 
     fig.update_xaxes(dtick=1)
-    
+    _style_figure(fig)
+
     return fig.to_html(full_html=False, config={'responsive': True})
+
+
+def grafica6():
+    """Volumen agregado de viajes según haya o no evento (complementa las series por hora)."""
+    df = data5.copy()
+    totals = df.groupby("has_event", as_index=False)["trip_count"].sum()
+
+    def _label(v):
+        if v is True or v == 1 or str(v).lower() in ("true", "1"):
+            return "Con evento"
+        return "Sin evento"
+
+    totals["contexto"] = totals["has_event"].map(_label)
+    fig = px.bar(
+        totals,
+        x="contexto",
+        y="trip_count",
+        color="contexto",
+        title="Volumen total de viajes en el periodo (con vs sin evento)",
+        labels={"trip_count": "Suma de viajes", "contexto": ""},
+        color_discrete_map={"Con evento": "#c9a227", "Sin evento": "#5e6678"},
+    )
+    fig.update_layout(showlegend=False)
+    _style_figure(fig)
+    return fig.to_html(full_html=False, config={"responsive": True})
 
 
 def generate_films_taxi_map():
