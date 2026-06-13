@@ -40,10 +40,11 @@ def grafica1(topN=25,as_json=False):
     )
 
     fig.update_layout(
-        title=f'TOP {topN} Códigos Postales más y menos demandados',
+        title=f'TOP {topN} Mayor y Menor demanda',
         xaxis_title='Numero de Viajes',
         yaxis_title='ZIP Code',
         yaxis={'categoryorder': 'total ascending'},
+        yaxis_showticklabels=False,
         coloraxis_showscale=False,
     )
 
@@ -70,10 +71,11 @@ def grafica2(topN=25,as_json=False):
     )
 
     fig.update_layout(
-        title=f'TOP {topN} Códigos Postales más y menos generosos',
+        title=f'TOP {topN} Mayor y Menor propina',
         xaxis_title='Propina Media ($)',
         yaxis_title='ZIP Code',
         yaxis={'categoryorder': 'total ascending'}, # Ordena correctamente de mayor a menor
+        yaxis_showticklabels=False,
         coloraxis_showscale=False,
     )
 
@@ -101,10 +103,11 @@ def grafica3(topN=25,as_json=False):
     )
 
     fig.update_layout(
-        title=f'TOP {topN} Códigos Postales mayor y menor ingreso',
+        title=f'TOP {topN} Mayor y Menor ingreso',
         xaxis_title='Ingreso Medio ($)',
         yaxis_title='ZIP Code',
         yaxis={'categoryorder': 'total ascending'}, # Ordena correctamente de mayor a menor
+        yaxis_showticklabels=False,
         coloraxis_showscale=False,
     )
 
@@ -329,3 +332,84 @@ def generate_economic_map():
 
     # Extraer el HTML del mapa folium para inyectarlo en Jinja
     return m._repr_html_()
+
+
+def grafica7(as_json=False):
+    """Scatter plot: Relación entre volumen de viajes y propinas (color by income)"""
+
+    fig = px.scatter(
+        data_frame=data,
+        x='volumen_viajes',
+        y='propina_media',
+        color='ingreso_medio',
+        size='volumen_viajes',
+        hover_name='ZIP_CODE',
+        hover_data={
+            'volumen_viajes': ':,.0f',
+            'propina_media': ':,.2f',
+            'ingreso_medio': ':,.0f'
+        },
+        color_continuous_scale='YlOrRd',
+        size_max=50,
+        opacity=0.7,
+    )
+
+    fig.update_layout(
+        title='Análisis de Correlación: Demanda vs Propinas',
+        xaxis_title='Volumen Total de Viajes',
+        yaxis_title='Propina Media por Viaje ($)',
+        coloraxis_colorbar_title='Ingreso Medio ($)',
+        hovermode='closest',
+        plot_bgcolor='rgba(244, 245, 247, 0.5)',
+        height=450,
+    )
+
+    fig.update_xaxes(showgrid=True, gridwidth=1, gridcolor='rgba(200, 200, 200, 0.2)')
+    fig.update_yaxes(showgrid=True, gridwidth=1, gridcolor='rgba(200, 200, 200, 0.2)')
+
+    if as_json:
+        return fig.to_json()
+    return fig.to_html(full_html=False, config={'responsive': True})
+
+
+def extract_kpi_data():
+    """Extract KPI data for dashboard cards"""
+
+    # Top earning zip code
+    top_earning_idx = data['ingreso_medio'].idxmax()
+    top_earning_zip = data.loc[top_earning_idx, 'ZIP_CODE']
+    top_earning_value = data.loc[top_earning_idx, 'ingreso_medio']
+
+    # Highest tips zone
+    top_tips_idx = data['propina_media'].idxmax()
+    top_tips_zip = data.loc[top_tips_idx, 'ZIP_CODE']
+    top_tips_value = data.loc[top_tips_idx, 'propina_media']
+
+    # Highest demand zone
+    top_volume_idx = data['volumen_viajes'].idxmax()
+    top_volume_zip = data.loc[top_volume_idx, 'ZIP_CODE']
+    top_volume_value = data.loc[top_volume_idx, 'volumen_viajes']
+
+    # Global statistics
+    avg_income = data['ingreso_medio'].mean()
+    avg_tips = data['propina_media'].mean()
+    avg_volume = data['volumen_viajes'].mean()
+
+    median_income = data['ingreso_medio'].median()
+    median_tips = data['propina_media'].median()
+    median_volume = data['volumen_viajes'].median()
+
+    return {
+        'top_earning_zip': top_earning_zip,
+        'top_earning_value': round(top_earning_value, 2),
+        'top_tips_zip': top_tips_zip,
+        'top_tips_value': round(top_tips_value, 2),
+        'top_volume_zip': top_volume_zip,
+        'top_volume_value': int(top_volume_value),
+        'avg_income': round(avg_income, 2),
+        'avg_tips': round(avg_tips, 2),
+        'avg_volume': int(avg_volume),
+        'median_income': round(median_income, 2),
+        'median_tips': round(median_tips, 2),
+        'median_volume': int(median_volume),
+    }

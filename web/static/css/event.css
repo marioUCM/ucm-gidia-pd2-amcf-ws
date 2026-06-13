@@ -1,18 +1,254 @@
 /* Módulo eventos: detalles que complementan module-shell.css */
 
-.analytics-page .map-pelis-wrapper {
+/* Map container - SAME AS METRO */
+.map-container-wrapper {
     width: 100%;
-    height: clamp(280px, 52vh, 500px);
-    overflow: hidden;
+    height: auto;
 }
 
+.map-panel__frame {
+    border-radius: 22px;
+    border: 1px solid #d8e3ef;
+    background: linear-gradient(180deg, #f6f9fc 0%, #eef4fa 100%);
+    padding: 14px;
+}
+
+.map-pelis-wrapper {
+    overflow: hidden;
+    border-radius: 18px;
+    background: #dfe9f3;
+    display: block;
+}
+
+.map-pelis-wrapper iframe {
+    display: block;
+    width: 100%;
+    min-height: 720px;
+    border: 0;
+    border-radius: 18px;
+}
+
+.map-pelis-wrapper > div {
+    width: 100%;
+}
+
+.map-pelis-wrapper .folium-map,
+.map-pelis-wrapper .leaflet-container {
+    width: 100% !important;
+    height: 720px !important;
+    border-radius: 18px;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.map-pelis-wrapper svg,
+.map-pelis-wrapper canvas {
+    width: 100% !important;
+    height: 100% !important;
+}
+
+/* Impact Indicators Section */
+.impact-summary {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: clamp(14px, 2.5vw, 20px);
+    margin-bottom: clamp(28px, 4vw, 36px);
+    width: 100%;
+}
+
+.impact-indicator {
+    background: var(--color-surface);
+    border: 2px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: clamp(20px, 3vw, 28px);
+    text-align: center;
+    box-shadow: var(--shadow-sm);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.impact-indicator:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.impact-indicator.positive {
+    border-color: #22c55e;
+    background: linear-gradient(135deg, rgba(34, 197, 94, 0.05) 0%, transparent 100%);
+}
+
+.impact-indicator.negative {
+    border-color: #ef4444;
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.05) 0%, transparent 100%);
+}
+
+.impact-label {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--color-text-muted);
+    margin-bottom: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.impact-value-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.impact-arrow {
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.impact-arrow.up {
+    color: #22c55e;
+}
+
+.impact-arrow.down {
+    color: #ef4444;
+}
+
+.impact-value {
+    font-size: clamp(1.75rem, 4vw, 2.25rem);
+    font-weight: 700;
+    color: var(--color-text);
+    line-height: 1;
+}
+
+.impact-unit {
+    font-size: 1rem;
+    color: var(--color-text-muted);
+    margin-left: 2px;
+}
+
+/* Section Headers */
+.section-header {
+    margin-bottom: clamp(16px, 2.5vw, 22px);
+    padding-bottom: 12px;
+    border-bottom: 2px solid var(--color-border);
+}
+
+.section-header h2 {
+    margin: 0 0 6px;
+    font-size: clamp(1.125rem, 2.5vw, 1.375rem);
+    font-weight: 700;
+    color: var(--color-text);
+    text-align: center;
+}
+
+.section-header p {
+    margin: 0;
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    text-align: center;
+}
+
+/* Map and Charts */
 .analytics-page .surface-panel .plot-grid {
     padding: 0 clamp(10px, 2vw, 18px) clamp(16px, 2.5vw, 22px);
 }
 
-/* No forzar ancho en Plotly: en iOS distorsiona el canvas respecto al layout */
+/* Grid layouts for charts */
+.plot-grid--interactive {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: clamp(14px, 2.5vw, 20px);
+}
+
+.plot-grid--static {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: clamp(14px, 2.5vw, 20px);
+}
+
+/* Altura consistente para gráficas */
+.plot-grid--interactive > .plot-slot,
+.plot-grid--static > .plot-slot {
+    min-height: 350px;
+    display: flex;
+    flex-direction: column;
+}
+
+.plot-grid--interactive > .plot-slot .plotly-graph-div,
+.plot-grid--static > .plot-slot .plotly-graph-div {
+    flex: 1;
+    min-height: 300px;
+}
+
+/* Section containers */
+.charts-section {
+    margin-bottom: clamp(24px, 3.5vw, 32px);
+}
 
 .analytics-page .grid > .plot-slot,
 .analytics-page .static-section > .plot-slot {
     min-height: 280px;
+}
+
+/* Color coding for event indicators */
+.event-indicator {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 500;
+    font-size: 0.875rem;
+    padding: 4px 10px;
+    border-radius: var(--radius-sm);
+}
+
+.event-indicator.with-event {
+    background: rgba(34, 197, 94, 0.1);
+    color: #22c55e;
+}
+
+.event-indicator.without-event {
+    background: rgba(107, 114, 128, 0.1);
+    color: #6b7280;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1200px) {
+    .plot-grid--interactive {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .plot-grid--static {
+        grid-template-columns: 1fr;
+    }
+
+    .impact-summary {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 900px) {
+    .plot-grid--interactive {
+        grid-template-columns: 1fr;
+    }
+
+    .plot-grid--static {
+        grid-template-columns: 1fr;
+    }
+
+    .impact-summary {
+        grid-template-columns: 1fr;
+    }
+
+    .map-pelis-wrapper {
+        height: clamp(300px, 60vh, 500px);
+    }
+}
+
+@media (max-width: 480px) {
+    .impact-summary {
+        grid-template-columns: 1fr;
+    }
+
+    .map-pelis-wrapper {
+        height: 55vh;
+        min-height: 260px;
+        max-height: 380px;
+    }
 }

@@ -1,16 +1,248 @@
 /* Módulo económico: complementos a module-shell.css */
 
-.analytics-page .map-coropletico-wrapper {
+/* Map container - SAME AS METRO */
+.map-container-wrapper {
     width: 100%;
-    height: clamp(280px, 52vh, 500px);
-    overflow: hidden;
+    height: auto;
 }
 
+.map-panel__frame {
+    border-radius: 22px;
+    border: 1px solid #d8e3ef;
+    background: linear-gradient(180deg, #f6f9fc 0%, #eef4fa 100%);
+    padding: 14px;
+}
+
+.map-coropletico-wrapper {
+    overflow: hidden;
+    border-radius: 18px;
+    background: #dfe9f3;
+    display: block;
+}
+
+.map-coropletico-wrapper iframe {
+    display: block;
+    width: 100%;
+    min-height: 720px;
+    border: 0;
+    border-radius: 18px;
+}
+
+.map-coropletico-wrapper > div {
+    width: 100%;
+}
+
+.map-coropletico-wrapper .folium-map,
+.map-coropletico-wrapper .leaflet-container {
+    width: 100% !important;
+    height: 720px !important;
+    border-radius: 18px;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.map-coropletico-wrapper svg,
+.map-coropletico-wrapper canvas {
+    width: 100% !important;
+    height: 100% !important;
+}
+
+/* KPI Cards Container */
+.kpi-section {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: clamp(14px, 2vw, 20px);
+    margin-bottom: clamp(28px, 4vw, 36px);
+    width: 100%;
+}
+
+.kpi-card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: clamp(16px, 2.5vw, 22px);
+    text-align: center;
+    box-shadow: var(--shadow-sm);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+    min-height: 140px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.kpi-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+    border-color: rgba(201, 162, 39, 0.2);
+}
+
+.kpi-card.earning {
+    border-left: 4px solid #22c55e;
+}
+
+.kpi-card.tips {
+    border-left: 4px solid #3b82f6;
+}
+
+.kpi-card.volume {
+    border-left: 4px solid #f59e0b;
+}
+
+.kpi-card.stats {
+    border-left: 4px solid #6b7280;
+}
+
+.kpi-icon {
+    font-size: 1.75rem;
+    margin-bottom: 8px;
+}
+
+.kpi-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--color-text-subtle);
+    margin-bottom: 6px;
+}
+
+.kpi-value {
+    font-size: clamp(1.25rem, 3vw, 1.75rem);
+    font-weight: 600;
+    color: var(--color-text);
+    margin-bottom: 4px;
+    line-height: 1.2;
+}
+
+.kpi-secondary {
+    font-size: 0.8125rem;
+    color: var(--color-text-muted);
+    font-weight: 500;
+}
+
+/* Section Headers */
+.section-header {
+    margin-bottom: clamp(16px, 2.5vw, 22px);
+    padding-bottom: 12px;
+    border-bottom: 2px solid var(--color-border);
+}
+
+.section-header h2 {
+    margin: 0 0 6px;
+    font-size: clamp(1.125rem, 2.5vw, 1.375rem);
+    font-weight: 700;
+    color: var(--color-text);
+    text-align: center;
+}
+
+.section-header p {
+    margin: 0;
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    text-align: center;
+}
+
+/* Enhanced Chart Container */
 .analytics-page .surface-panel .plot-grid {
     padding: 0 clamp(10px, 2vw, 18px) clamp(16px, 2.5vw, 22px);
 }
 
-.analytics-page .grid > .plot-slot,
-.analytics-page .static-section > .plot-slot {
-    min-height: 280px;
+/* Grid for charts - 3 columns, responsive */
+.plot-grid--interactive {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: clamp(14px, 2.5vw, 20px);
+}
+
+.plot-grid--static {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: clamp(14px, 2.5vw, 20px);
+}
+
+/* Altura consistente para gráficas */
+.plot-grid--interactive > .plot-slot,
+.plot-grid--static > .plot-slot {
+    min-height: 350px;
+    display: flex;
+    flex-direction: column;
+}
+
+.plot-grid--interactive > .plot-slot .plotly-graph-div,
+.plot-grid--static > .plot-slot .plotly-graph-div {
+    flex: 1;
+    min-height: 300px;
+}
+
+/* Section containers for better organization */
+.charts-section {
+    margin-bottom: clamp(24px, 3.5vw, 32px);
+}
+
+/* Correlation matrix - sin colorbar */
+.plot-grid--static > .plot-slot:last-child .plotly-graph-div .colorbar {
+    display: none !important;
+}
+
+.plot-grid--static > .plot-slot:last-child {
+    grid-column: 1 / -1;
+    min-height: 300px;
+    max-width: 100%;
+}
+
+/* Igualar alturas de boxplots */
+.plot-grid--static > .plot-slot {
+    height: 350px;
+}
+
+.plot-grid--static > .plot-slot .plotly-graph-div {
+    height: 100%;
+}
+
+/* Responsive: Tablet (768px) */
+@media (max-width: 1200px) {
+    .plot-grid--interactive,
+    .plot-grid--static {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .kpi-section {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Responsive: Tablet (768px) */
+@media (max-width: 900px) {
+    .plot-grid--interactive,
+    .plot-grid--static {
+        grid-template-columns: 1fr;
+    }
+
+    .kpi-section {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .plot-grid--static > .plot-slot:last-child {
+        grid-column: auto;
+    }
+
+    .map-coropletico-wrapper {
+        height: clamp(300px, 60vh, 500px);
+    }
+}
+
+@media (max-width: 480px) {
+    .kpi-section {
+        grid-template-columns: 1fr;
+    }
+
+    .map-coropletico-wrapper {
+        height: 55vh;
+        min-height: 260px;
+        max-height: 380px;
+    }
+
+    .plot-grid--static > .plot-slot:last-child {
+        min-height: 320px;
+    }
 }

@@ -23,20 +23,63 @@ Mapa coroplético económico de Nueva York y gráficas de volumen de viajes, pro
         </p>
     </header>
 
+    <!-- KPI Cards Section -->
+    {% if kpi_data %}
+    <section class="kpi-section" aria-labelledby="kpi-title">
+        <h2 id="kpi-title" class="visually-hidden">Indicadores Clave de Desempeño</h2>
+
+        <div class="kpi-card earning">
+            <div class="kpi-icon">💰</div>
+            <div class="kpi-label">Mayor Ingreso</div>
+            <div class="kpi-value">${{ kpi_data.top_earning_value }}</div>
+            <div class="kpi-secondary">ZIP {{ kpi_data.top_earning_zip }}</div>
+        </div>
+
+        <div class="kpi-card tips">
+            <div class="kpi-icon">💵</div>
+            <div class="kpi-label">Mayor Propina</div>
+            <div class="kpi-value">${{ kpi_data.top_tips_value }}</div>
+            <div class="kpi-secondary">ZIP {{ kpi_data.top_tips_zip }}</div>
+        </div>
+
+        <div class="kpi-card volume">
+            <div class="kpi-icon">🚕</div>
+            <div class="kpi-label">Mayor Demanda</div>
+            <div class="kpi-value">{{ kpi_data.top_volume_value }}</div>
+            <div class="kpi-secondary">ZIP {{ kpi_data.top_volume_zip }}</div>
+        </div>
+
+        <div class="kpi-card stats">
+            <div class="kpi-icon">📊</div>
+            <div class="kpi-label">Promedio Global</div>
+            <div class="kpi-value">${{ kpi_data.avg_income }}</div>
+            <div class="kpi-secondary">Ingreso medio por viaje</div>
+        </div>
+    </section>
+    {% endif %}
+
+    <!-- Map Section -->
     <section class="surface-panel map-panel" aria-labelledby="money-map-title">
         <div class="map-panel__head">
             <h2 id="money-map-title">Mapa económico y propinas</h2>
             <p>Coropleta con indicadores agregados por zona postal.</p>
         </div>
         <div class="map-panel__frame">
-            <div class="map-coropletico-wrapper map-embed">
-                {{ mapa_coropletico | safe }}
+            <div class="map-container-wrapper">
+                <div class="map-coropletico-wrapper map-embed">
+                    {{ mapa_coropletico | safe }}
+                </div>
             </div>
         </div>
     </section>
 
-    <section class="surface-panel" aria-labelledby="money-charts-live">
-        <h2 id="money-charts-live" class="visually-hidden">Gráficas interactivas</h2>
+    <!-- Interactive Charts Section -->
+    <section class="surface-panel charts-section" aria-labelledby="money-charts-live">
+        <div class="section-header">
+            <h2 id="money-charts-live">TOP Análisis</h2>
+            <p>Gráficas dinámicas de zonas más activas, generosas y rentables.</p>
+        </div>
+
         <div class="chart-toolbar">
             <label for="input-topN">Mostrar TOP</label>
             <input type="number" id="input-topN" value="{{ topN_actual }}" min="5" max="50" step="5">
@@ -50,11 +93,30 @@ Mapa coroplético económico de Nueva York y gráficas de volumen de viajes, pro
         </div>
     </section>
 
-    <section class="plot-grid plot-grid--static static-section" aria-labelledby="money-charts-static">
-        <h2 id="money-charts-static" class="visually-hidden">Distribuciones y relaciones</h2>
-        <div id="container-g4" class="plot-slot">{{ grafica4 | safe }}</div>
-        <div id="container-g5" class="plot-slot">{{ grafica5 | safe }}</div>
-        <div id="container-g6" class="plot-slot">{{ grafica6 | safe }}</div>
+    <!-- Statistical Distribution Section -->
+    <section class="surface-panel charts-section" aria-labelledby="money-charts-static">
+        <div class="section-header">
+            <h2 id="money-charts-static">Distribuciones Estadísticas</h2>
+            <p>Análisis de dispersión y valores atípicos por métrica.</p>
+        </div>
+
+        <div class="plot-grid plot-grid--static static-section">
+            <div id="container-g4" class="plot-slot">{{ grafica4 | safe }}</div>
+            <div id="container-g5" class="plot-slot">{{ grafica5 | safe }}</div>
+            <div id="container-g6" class="plot-slot">{{ grafica6 | safe }}</div>
+        </div>
+    </section>
+
+    <!-- Correlation Analysis Section -->
+    <section class="surface-panel charts-section" aria-labelledby="money-charts-correlation">
+        <div class="section-header">
+            <h2 id="money-charts-correlation">Análisis de Correlación</h2>
+            <p>Relación entre actividad, propinas e ingresos por zona.</p>
+        </div>
+
+        <div class="plot-grid plot-grid--static">
+            <div id="container-g7" class="plot-slot" style="grid-column: 1 / -1;">{{ grafica7 | safe }}</div>
+        </div>
     </section>
 
 </div>

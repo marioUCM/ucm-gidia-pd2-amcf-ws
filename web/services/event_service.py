@@ -66,7 +66,7 @@ def grafica1(topN=25, as_json=False):
         y="zone",
         color="Tipo_Impacto",
         orientation="h",
-        title=f"TOP {topN} Impacto del Rodaje en Demanda",
+        title=f"TOP {topN} Impacto en Demanda",
         labels={"Cambio_Pct": "Variación del Tráfico (%)", "Zone": "Zona de Taxi"},
         color_discrete_map={"Aumento Tráfico": "#2ecc71", "Caída Tráfico": "#e74c3c"},
         hover_data=["zone"]
@@ -104,7 +104,7 @@ def grafica2(topN=25, as_json=False):
         x="profit_pct",
         y="zone",
         orientation="h",
-        title=f"TOP {topN} Impacto del Rodaje en Ingresos por Hora",
+        title=f"TOP {topN} Impacto en Ingresos por Hora",
         labels={"profit_pct": "Cambio en Ingresos ($/Hora) %", "zone": "Zona"},
         color="Tipo_Impacto",
         color_discrete_map={"Aumento Ingresos": "#2ecc71", "Caida Ingresos": "#e74c3c"},
@@ -143,7 +143,7 @@ def grafica3(topN=25, as_json=False):
         x="friction_pct",
         y="zone",
         orientation="h",
-        title=f"TOP {topN} Impacto de los Rodajes en la Velocidad del Tráfico",
+        title=f"TOP {topN} Impacto en la Velocidad del Tráfico",
         labels={"friction_pct": "Cambio en Velocidad (%)", "zone": "Zona"},
         color="Tipo_Velocidad",
         color_discrete_map={"Aumento Velocidad": "#2ecc71", "Caida Velocidad": "#e74c3c"},
@@ -262,3 +262,76 @@ def generate_films_taxi_map():
 
     # Extraer el HTML del mapa folium para inyectarlo en Jinja
     return m._repr_html_()
+
+
+def grafica7(as_json=False):
+    """Heatmap: Matriz de impactos (demanda, ingresos, velocidad)"""
+
+    # Preparar datos para heatmap
+    impact_demand = data1.copy().head(10)[['zone', 'impacto_pct']].rename(columns={'impacto_pct': 'Demanda'})
+    impact_income = data2.copy().head(10)[['zone', 'profit_pct']].rename(columns={'profit_pct': 'Ingresos'})
+    impact_speed = data3.copy().tail(10)[['zone', 'friction_pct']].rename(columns={'friction_pct': 'Velocidad'})
+
+    # Merge para crear matriz (usar solo zonas comunes)
+    heatmap_data = impact_demand.copy()
+    heatmap_data = heatmap_data.merge(
+        impact_income[['zone', 'Ingresos']],
+        on='zone',
+        how='left'
+    )
+    heatmap_data = heatmap_data.merge(
+        impact_speed[['zone', 'Velocidad']],
+        on='zone',
+        how='left'
+    )
+
+    # Fillna para zonas sin datos en alguna métrica
+    heatmap_data = heatmap_data.fillna(0)
+
+    # Crear heatmap
+    fig = px.imshow(
+        heatmap_data.set_index('zone')[['Demanda', 'Ingresos', 'Velocidad']].T,
+        labels=dict(x="Zona", y="Métrica", color="Cambio %"),
+        color_continuous_scale="RdYlGn",
+        color_continuous_midpoint=0,
+        title="Matriz de Impactos por Zona",
+        aspect="auto",
+    )
+
+    fig.update_layout(
+        xaxis_title="Zona de Impacto",
+        yaxis_title="Métrica",
+        coloraxis_colorbar_title="% Cambio",
+        height=400,
+    )
+
+    _style_figure(fig)
+
+    if as_json:
+        return fig.to_json()
+    return fig.to_html(full_html=False, config={'responsive': True})
+
+
+def extract_impact_summary():
+    """Extract impact summary for dashboard indicators"""
+
+    # Max demand impact
+    max_demand_impact = data1['impacto_pct'].max()
+    min_demand_impact = data1['impacto_pct'].min()
+
+    # Max income impact
+    max_income_impact = data2['profit_pct'].max()
+    min_income_impact = data2['profit_pct'].min()
+
+    # Max speed impact
+    max_speed_impact = data3['friction_pct'].max()
+    min_speed_impact = data3['friction_pct'].min()
+
+    return {
+        'demand_impact': round(max_demand_impact, 1),
+        'demand_direction': 'positive' if max_demand_impact > 0 else 'negative',
+        'income_impact': round(max_income_impact, 1),
+        'income_direction': 'positive' if max_income_impact > 0 else 'negative',
+        'speed_impact': round(max_speed_impact, 1),
+        'speed_direction': 'positive' if max_speed_impact > 0 else 'negative',
+    }

@@ -52,7 +52,7 @@ if __name__ == "__main__":
         lip = _lan_ip()
         if lip:
             print(f"BoostMobility: en este equipo http://127.0.0.1:{port}")
-            print(f"  Desde el móvil (misma Wi‑Fi): http://{lip}:{port}")
+            print(f"\tDesde el móvil (mismo Wi‑Fi): http://{lip}:{port}")
         else:
             print(f"BoostMobility: http://127.0.0.1:{port} (host {host})")
     else:

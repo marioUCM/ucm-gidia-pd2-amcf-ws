@@ -167,6 +167,37 @@
     overflow: hidden;
 }
 
+/* Centrar y mejorar títulos de gráficas - Plotly */
+.plot-slot .plotly-graph-div .plot-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.plot-slot .plotly-graph-div .plot-container text.title {
+    text-anchor: middle !important;
+    x: 50% !important;
+    font-size: 14px !important;
+}
+
+.plot-slot .plotly-graph-div .plot-container g.titles text {
+    text-anchor: middle !important;
+    font-size: 14px !important;
+}
+
+.plot-slot .plotly-graph-div .plot-container .svg-container {
+    height: 100% !important;
+}
+
+/* Leyendas - Plotly */
+.plot-slot .plotly-graph-div .legend {
+    font-size: 12px;
+    max-width: 180px;
+}
+
+.plot-slot .plotly-graph-div .legendtext {
+    font-size: 11px;
+}
+
 .map-panel__head {
     text-align: center;
     padding: clamp(20px, 3vw, 28px) clamp(16px, 3vw, 28px) 0;

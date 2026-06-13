@@ -789,4 +789,31 @@ tbody tr:hover {
         min-height: 50vh !important;
         height: 50vh !important;
     }
+
+    /* Fix overflow issues on mobile */
+    .metro-page {
+        overflow-x: hidden;
+    }
+
+    .line-prob-row {
+        overflow: hidden;
+    }
+
+    .line-prob-metrics {
+        min-width: auto;
+        flex-wrap: wrap;
+    }
+
+    .line-prob-metric {
+        min-width: 60px;
+        font-size: 12px;
+    }
+
+    .focus-group-card {
+        padding: 16px;
+    }
+
+    .line-group-card {
+        padding: 14px;
+    }
 }

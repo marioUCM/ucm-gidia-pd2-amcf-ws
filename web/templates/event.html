@@ -23,20 +23,65 @@ Mapa de calor de viajes y rodajes, gráficas de impacto en demanda, ingresos y v
         </p>
     </header>
 
+    <!-- Impact Summary Section -->
+    {% if impact_summary %}
+    <section class="impact-summary" aria-labelledby="impact-title">
+        <h2 id="impact-title" class="visually-hidden">Resumen de Impactos</h2>
+
+        <div class="impact-indicator {% if impact_summary.demand_direction == 'positive' %}positive{% else %}negative{% endif %}">
+            <div class="impact-label">Impacto en Demanda</div>
+            <div class="impact-value-container">
+                <span class="impact-arrow {% if impact_summary.demand_direction == 'positive' %}up{% else %}down{% endif %}">
+                    {% if impact_summary.demand_direction == 'positive' %}↑{% else %}↓{% endif %}
+                </span>
+                <span class="impact-value">{{ impact_summary.demand_impact }}<span class="impact-unit">%</span></span>
+            </div>
+        </div>
+
+        <div class="impact-indicator {% if impact_summary.income_direction == 'positive' %}positive{% else %}negative{% endif %}">
+            <div class="impact-label">Impacto en Ingresos</div>
+            <div class="impact-value-container">
+                <span class="impact-arrow {% if impact_summary.income_direction == 'positive' %}up{% else %}down{% endif %}">
+                    {% if impact_summary.income_direction == 'positive' %}↑{% else %}↓{% endif %}
+                </span>
+                <span class="impact-value">{{ impact_summary.income_impact }}<span class="impact-unit">%</span></span>
+            </div>
+        </div>
+
+        <div class="impact-indicator {% if impact_summary.speed_direction == 'positive' %}positive{% else %}negative{% endif %}">
+            <div class="impact-label">Impacto en Velocidad</div>
+            <div class="impact-value-container">
+                <span class="impact-arrow {% if impact_summary.speed_direction == 'positive' %}up{% else %}down{% endif %}">
+                    {% if impact_summary.speed_direction == 'positive' %}↑{% else %}↓{% endif %}
+                </span>
+                <span class="impact-value">{{ impact_summary.speed_impact }}<span class="impact-unit">%</span></span>
+            </div>
+        </div>
+    </section>
+    {% endif %}
+
+    <!-- Map Section -->
     <section class="surface-panel map-panel" aria-labelledby="event-map-title">
         <div class="map-panel__head">
             <h2 id="event-map-title">Mapa de calor y rodajes</h2>
             <p>Comparación entre intensidad de viajes por zona y puntos de interés vinculados a rodajes.</p>
         </div>
         <div class="map-panel__frame">
-            <div class="map-pelis-wrapper map-embed">
-                {{ mapa_pelis | safe }}
+            <div class="map-container-wrapper">
+                <div class="map-pelis-wrapper map-embed">
+                    {{ mapa_pelis | safe }}
+                </div>
             </div>
         </div>
     </section>
 
-    <section class="surface-panel" aria-labelledby="event-charts-live">
-        <h2 id="event-charts-live" class="visually-hidden">Gráficas interactivas</h2>
+    <!-- Impact Charts Section -->
+    <section class="surface-panel charts-section" aria-labelledby="event-charts-live">
+        <div class="section-header">
+            <h2 id="event-charts-live">Impacto de Rodajes</h2>
+            <p>Análisis detallado del efecto en demanda, ingresos y velocidad.</p>
+        </div>
+
         <div class="chart-toolbar">
             <label for="input-topN">Mostrar TOP</label>
             <input type="number" id="input-topN" value="{{ topN_actual }}" min="5" max="50" step="5" aria-describedby="event-topn-hint">
@@ -51,11 +96,17 @@ Mapa de calor de viajes y rodajes, gráficas de impacto en demanda, ingresos y v
         </div>
     </section>
 
-    <section class="plot-grid plot-grid--static static-section" aria-labelledby="event-charts-static">
-        <h2 id="event-charts-static" class="visually-hidden">Series por hora y resumen</h2>
-        <div id="container-g4" class="plot-slot">{{ grafica4 | safe }}</div>
-        <div id="container-g5" class="plot-slot">{{ grafica5 | safe }}</div>
-        <div id="container-g6" class="plot-slot">{{ grafica6 | safe }}</div>
+    <!-- Hourly Patterns Section -->
+    <section class="surface-panel charts-section" aria-labelledby="event-charts-static">
+        <div class="section-header">
+            <h2 id="event-charts-static">Patrones Horarios</h2>
+            <p>Comparativa de demanda y propinas con y sin eventos.</p>
+        </div>
+
+        <div class="plot-grid plot-grid--static static-section">
+            <div id="container-g4" class="plot-slot">{{ grafica4 | safe }}</div>
+            <div id="container-g5" class="plot-slot">{{ grafica5 | safe }}</div>
+        </div>
     </section>
 
 </div>

@@ -41,10 +41,10 @@ body {
 /* Evita zoom indeseado en iOS al enfocar campos (mínimo 16px) */
 @media (max-width: 767px) {
     .site-main select,
-    .site-main input[type="date"],
-    .site-main input[type="number"],
-    .site-main input[type="text"],
-    .site-main input[type="search"],
+    .site-main input[type=”date”],
+    .site-main input[type=”number”],
+    .site-main input[type=”text”],
+    .site-main input[type=”search”],
     .site-main textarea {
         font-size: 16px;
     }
@@ -78,12 +78,114 @@ body {
         min-height: 0;
     }
 
+    /* Plotly legend visibility on mobile - better hide */
+    .plot-slot .plotly-graph-div .legend {
+        display: none !important;
+        pointer-events: none !important;
+    }
+
+    .plot-slot .plotly-graph-div .infolayer .legend {
+        display: none !important;
+    }
+
+    /* Leyendas en desktop - fix styling */
+    .legend {
+        background-color: rgba(255, 255, 255, 0.95) !important;
+        border: 1px solid #ddd !important;
+    }
+
+    /* Map containers mobile - SAME AS METRO */
+    .map-coropletico-wrapper,
+    .map-pelis-wrapper {
+        overflow: hidden;
+    }
+
+    .map-coropletico-wrapper iframe,
+    .map-pelis-wrapper iframe {
+        display: block;
+        width: 100%;
+        min-height: 50vh;
+        height: 50vh;
+        border: 0;
+        border-radius: 12px;
+    }
+
+    .map-coropletico-wrapper .folium-map,
+    .map-coropletico-wrapper .leaflet-container,
+    .map-pelis-wrapper .folium-map,
+    .map-pelis-wrapper .leaflet-container {
+        width: 100% !important;
+        height: 50vh !important;
+        min-height: 50vh !important;
+        border-radius: 12px;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    /* KPI Cards responsive */
+    .kpi-section {
+        grid-template-columns: repeat(2, 1fr);
+        gap: clamp(10px, 2vw, 14px);
+    }
+
+    .kpi-card {
+        padding: clamp(12px, 2vw, 16px);
+        min-height: 120px;
+    }
+
+    .kpi-icon {
+        font-size: 1.5rem;
+        margin-bottom: 6px;
+    }
+
+    .kpi-value {
+        font-size: clamp(1rem, 2.5vw, 1.25rem);
+    }
+
+    /* Impact Indicators responsive */
+    .impact-summary {
+        grid-template-columns: 1fr;
+        gap: clamp(10px, 2vw, 14px);
+    }
+
+    .impact-indicator {
+        padding: clamp(16px, 2.5vw, 20px);
+    }
+
+    .impact-value {
+        font-size: clamp(1.25rem, 3vw, 1.75rem);
+    }
+
+    /* Map containers responsive */
+    .map-container-wrapper {
+        width: 100%;
+        overflow: hidden;
+    }
+
+    .map-coropletico-wrapper,
+    .map-pelis-wrapper {
+        width: 100%;
+        height: clamp(280px, 55vh, 450px);
+        overflow: hidden;
+        border-radius: 12px;
+    }
+
+    .map-coropletico-wrapper .folium-map,
+    .map-coropletico-wrapper .leaflet-container,
+    .map-pelis-wrapper .folium-map,
+    .map-pelis-wrapper .leaflet-container {
+        width: 100% !important;
+        height: 100% !important;
+        border-radius: 12px !important;
+    }
+
+    /* Charts responsive */
     .plot-slot {
         max-width: 100%;
         width: 100%;
         box-sizing: border-box;
         /* Altura mínima en unidades de viewport: evita gráficas “aplatanadas” en iPhone */
-        min-height: min(72vw, 420px);
+        min-height: min(72vw, 400px);
         -webkit-transform: translateZ(0);
         transform: translateZ(0);
     }
@@ -103,6 +205,17 @@ body {
         right: 2px !important;
     }
 
+    /* Grid adjustments for mobile */
+    .plot-grid--interactive,
+    .plot-grid--static {
+        grid-template-columns: 1fr;
+    }
+
+    .plot-grid--static > .plot-slot:last-child {
+        grid-column: auto;
+        min-height: 300px;
+    }
+
     .map-container {
         height: clamp(260px, 52vh, 500px);
     }
@@ -111,6 +224,66 @@ body {
         flex-wrap: wrap;
         justify-content: center;
         gap: 12px 18px;
+    }
+
+    /* Section headers responsive */
+    .section-header h2 {
+        font-size: clamp(1rem, 2vw, 1.125rem);
+    }
+
+    .section-header p {
+        font-size: 0.75rem;
+    }
+
+    /* Toolbar responsive */
+    .chart-toolbar {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+    }
+
+    .chart-toolbar label {
+        text-align: center;
+        font-size: 0.8125rem;
+    }
+
+    .chart-toolbar input[type=”number”],
+    .chart-toolbar button {
+        width: 100%;
+        max-width: 100%;
+        font-size: 16px;
+    }
+
+    .toolbar-hint {
+        font-size: 0.75rem;
+        text-align: center;
+    }
+}
+
+/* Tablet adjustments (768px - 1024px) */
+@media (min-width: 768px) and (max-width: 1024px) {
+    .kpi-section {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .impact-summary {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .plot-grid--interactive {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .plot-grid--static {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .chart-toolbar {
+        flex-wrap: wrap;
+    }
+
+    .chart-toolbar input[type=”number”] {
+        width: 80px;
     }
 }
 
@@ -146,8 +319,28 @@ body.nav-drawer-open .site-header * {
         padding-right: max(10px, env(safe-area-inset-right, 0px));
     }
 
+    .kpi-section {
+        grid-template-columns: 1fr;
+    }
+
+    .impact-summary {
+        grid-template-columns: 1fr;
+    }
+
     .chart-toolbar label {
         width: 100%;
         text-align: center;
+    }
+
+    .kpi-value {
+        font-size: 1.125rem;
+    }
+
+    .impact-value {
+        font-size: 1.5rem;
+    }
+
+    .plot-slot {
+        min-height: min(85vw, 350px);
     }
 }

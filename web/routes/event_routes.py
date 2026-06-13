@@ -6,7 +6,9 @@ from ..services.event_service import (
     grafica4,
     grafica5,
     grafica6,
+    grafica7,
     generate_films_taxi_map,
+    extract_impact_summary,
 )
 
 event = Blueprint("event", __name__)
@@ -16,6 +18,7 @@ event = Blueprint("event", __name__)
 def event_page():
 
     mapa_pelis = generate_films_taxi_map()
+    impact_summary = extract_impact_summary()
 
     topN = 25
 
@@ -25,6 +28,7 @@ def event_page():
     grafica4_html = grafica4()
     grafica5_html = grafica5()
     grafica6_html = grafica6()
+    grafica7_html = grafica7()
 
     return render_template(
         "event.html",
@@ -35,14 +39,16 @@ def event_page():
         grafica4=grafica4_html,
         grafica5=grafica5_html,
         grafica6=grafica6_html,
+        grafica7=grafica7_html,
         topN_actual=topN,
+        impact_summary=impact_summary,
     )
 
 @event.route("/update-graph", methods=["POST"])
 def update_graph():
     data = request.get_json()
     n = int(data.get("top_n", 25))
-    
+
     update_graph1 = grafica1(topN=n,as_json=True)
     update_graph2 = grafica2(topN=n,as_json=True)
     update_graph3 = grafica3(topN=n,as_json=True)
