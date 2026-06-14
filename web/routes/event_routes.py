@@ -5,8 +5,6 @@ from ..services.event_service import (
     grafica3,
     grafica4,
     grafica5,
-    grafica6,
-    grafica7,
     generate_films_taxi_map,
     extract_impact_summary,
 )
@@ -27,8 +25,6 @@ def event_page():
     grafica3_html = grafica3(topN,as_json=False)
     grafica4_html = grafica4()
     grafica5_html = grafica5()
-    grafica6_html = grafica6()
-    grafica7_html = grafica7()
 
     return render_template(
         "event.html",
@@ -38,8 +34,6 @@ def event_page():
         grafica3=grafica3_html,
         grafica4=grafica4_html,
         grafica5=grafica5_html,
-        grafica6=grafica6_html,
-        grafica7=grafica7_html,
         topN_actual=topN,
         impact_summary=impact_summary,
     )
