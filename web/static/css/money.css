@@ -9,14 +9,14 @@
 .map-panel__frame {
     border-radius: 22px;
     border: 1px solid #d8e3ef;
-    background: linear-gradient(180deg, #f6f9fc 0%, #eef4fa 100%);
+    background: #ffffff;
     padding: 14px;
 }
 
 .map-coropletico-wrapper {
     overflow: hidden;
     border-radius: 18px;
-    background: #dfe9f3;
+    background:#ffffff;
     display: block;
 }
 
@@ -160,6 +160,13 @@
     gap: clamp(14px, 2.5vw, 20px);
 }
 
+.plot-slot {
+    background: #ffffff !important; /* Fuerza el fondo a blanco puro */
+    border: 1px solid #d8e3ef !important; /* El borde sutil que prefieras */
+    border-radius: 16px !important; /* Mantiene las esquinas redondeadas */
+    padding: 10px; 
+}
+
 /* Altura consistente para gráficas */
 .plot-grid--interactive > .plot-slot,
 .plot-grid--static > .plot-slot {
@@ -180,11 +187,11 @@
 }
 
 /* Correlation matrix - sin colorbar */
-.plot-grid--static > .plot-slot:last-child .plotly-graph-div .colorbar {
+.plot-grid--static:not(.static-section) > .plot-slot:last-child .plotly-graph-div .colorbar {
     display: none !important;
 }
 
-.plot-grid--static > .plot-slot:last-child {
+.plot-grid--static:not(.static-section) > .plot-slot:last-child {
     grid-column: 1 / -1;
     min-height: 300px;
     max-width: 100%;

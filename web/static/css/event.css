@@ -9,14 +9,14 @@
 .map-panel__frame {
     border-radius: 22px;
     border: 1px solid #d8e3ef;
-    background: linear-gradient(180deg, #f6f9fc 0%, #eef4fa 100%);
+    background: #ffffff;
     padding: 14px;
 }
 
 .map-pelis-wrapper {
     overflow: hidden;
     border-radius: 18px;
-    background: #dfe9f3;
+    background: #ffffff;
     display: block;
 }
 

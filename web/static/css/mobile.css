@@ -41,10 +41,10 @@ body {
 /* Evita zoom indeseado en iOS al enfocar campos (mínimo 16px) */
 @media (max-width: 767px) {
     .site-main select,
-    .site-main input[type=”date”],
-    .site-main input[type=”number”],
-    .site-main input[type=”text”],
-    .site-main input[type=”search”],
+    .site-main input[type="date"],
+    .site-main input[type="number"],
+    .site-main input[type="text"],
+    .site-main input[type="search"],
     .site-main textarea {
         font-size: 16px;
     }
@@ -282,7 +282,7 @@ body {
         flex-wrap: wrap;
     }
 
-    .chart-toolbar input[type=”number”] {
+    .chart-toolbar input[type="number"] {
         width: 80px;
     }
 }
@@ -340,7 +340,8 @@ body.nav-drawer-open .site-header * {
         font-size: 1.5rem;
     }
 
-    .plot-slot {
-        min-height: min(85vw, 350px);
+    .plot-grid--static > .plot-slot:last-child {
+        min-height: 420px;  /* Le damos espacio de sobra para la gráfica de 400px */
+        overflow: visible;  /* Prevenimos que el navegador recorte las burbujas lateralmente */
     }
 }

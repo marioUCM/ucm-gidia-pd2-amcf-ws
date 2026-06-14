@@ -85,8 +85,13 @@ def grafica1(topN=25, as_json=False):
     if as_json:
         return fig.to_json()
     
-    return fig.to_html(full_html=False, config={'responsive': True})
+    return fig.to_html(full_html=False, config={
+        'responsive': True,
+        'displayModeBar': False,      # Oculta la barra superior flotante
+        'scrollZoom': False,          # Evita hacer zoom con el dedo/rueda
+        }
 
+    )
 
 def grafica2(topN=25, as_json=False):
 
@@ -124,8 +129,12 @@ def grafica2(topN=25, as_json=False):
     if as_json:
         return fig2.to_json()
     
-    return fig2.to_html(full_html=False, config={'responsive': True})
-
+    return fig2.to_html(full_html=False, config={
+        'responsive': True,
+        'displayModeBar': False,      # Oculta la barra superior flotante
+        'scrollZoom': False,          # Evita hacer zoom con el dedo/rueda
+        }
+ )
 
 def grafica3(topN=25, as_json=False):
 
@@ -163,8 +172,12 @@ def grafica3(topN=25, as_json=False):
     if as_json:
         return fig.to_json()
     
-    return fig.to_html(full_html=False, config={'responsive': True})
-
+    return fig.to_html(full_html=False, config={
+        'responsive': True,
+        'displayModeBar': False,      # Oculta la barra superior flotante
+        'scrollZoom': False,          # Evita hacer zoom con el dedo/rueda
+        }
+ )
 
 def grafica4():
 
@@ -186,7 +199,11 @@ def grafica4():
     fig.update_xaxes(dtick=1)
     _style_figure(fig)
 
-    return fig.to_html(full_html=False, config={'responsive': True})
+    return fig.to_html(full_html=False, config={
+        'responsive': True,
+        'displayModeBar': False,
+        'scrollZoom': False
+    })
 
 
 def grafica5():
@@ -212,8 +229,12 @@ def grafica5():
     fig.update_xaxes(dtick=1)
     _style_figure(fig)
 
-    return fig.to_html(full_html=False, config={'responsive': True})
-
+    return fig.to_html(full_html=False, config={
+        'responsive': True,
+        'displayModeBar': False,      # Oculta la barra superior flotante
+        'scrollZoom': False,          # Evita hacer zoom con el dedo/rueda
+        }
+ )
 
 def grafica6():
     """Volumen agregado de viajes según haya o no evento (complementa las series por hora)."""
@@ -237,8 +258,13 @@ def grafica6():
     )
     fig.update_layout(showlegend=False)
     _style_figure(fig)
-    return fig.to_html(full_html=False, config={"responsive": True})
 
+    return fig.to_html(full_html=False, config={
+        'responsive': True,
+        'displayModeBar': False,      # Oculta la barra superior flotante
+        'scrollZoom': False,          # Evita hacer zoom con el dedo/rueda
+        }
+    )
 
 def generate_films_taxi_map():
     # Generar el Mapa
@@ -309,7 +335,12 @@ def grafica7(as_json=False):
 
     if as_json:
         return fig.to_json()
-    return fig.to_html(full_html=False, config={'responsive': True})
+    
+    return fig.to_html(full_html=False, config={
+        'responsive': True,
+        'displayModeBar': False,
+        'scrollZoom': False
+    })
 
 
 def extract_impact_summary():

@@ -9,8 +9,8 @@ Mapa coroplético económico de Nueva York y gráficas de volumen de viajes, pro
 {% block content %}
 
 <link rel="stylesheet" href="{{ url_for('static', filename='css/module-shell.css') }}">
-<link rel="stylesheet" href="{{ url_for('static', filename='css/money.css') }}">
-<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/money.css') }}?v=1.1">
+<script src="https://cdn.plot.ly/plotly-2.32.0.min.js" charset="utf-8"></script>
 <script src="{{ url_for('static', filename='js/plotly-mobile.js') }}"></script>
 
 <div class="module-page analytics-page">
@@ -81,7 +81,7 @@ Mapa coroplético económico de Nueva York y gráficas de volumen de viajes, pro
         </div>
 
         <div class="chart-toolbar">
-            <label for="input-topN">Mostrar TOP</label>
+            <label for="input-topN">Mostrar TOP Mayor/Menor</label>
             <input type="number" id="input-topN" value="{{ topN_actual }}" min="5" max="50" step="5">
             <button type="button" id="btn-update">Actualizar gráficas</button>
         </div>
