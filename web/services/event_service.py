@@ -29,7 +29,21 @@ data5 = load_parquet_from_minio("boostmobility/events/comparativa_demanda.parque
 data6 = load_parquet_from_minio("boostmobility/films/df_mapa.parquet")
 data7 = load_parquet_from_minio("boostmobility/films/films_location.parquet")
 
-def grafica1(topN=25,as_json=False):
+
+def _style_figure(fig):
+    fig.update_layout(
+        xaxis=dict(automargin=True),
+        yaxis=dict(automargin=True),
+        xaxis_title=None,
+        yaxis_title=None,
+        showlegend=False,
+        margin=dict(l=10, r=20, t=50, b=20),
+        xaxis_dtick=6,
+        xaxis_tickangle=0,
+    )
+
+
+def grafica1(topN=25, as_json=False):
 
     comparativa = data1.copy()
 
@@ -48,28 +62,35 @@ def grafica1(topN=25,as_json=False):
         y="zone",
         color="Tipo_Impacto",
         orientation="h",
-        title=f"TOP {topN} Impacto del Rodaje en Demanda",
-        labels={"Cambio_Pct": "Variación del Tráfico (%)", "Zone": "Zona de Taxi"},
+        labels={"Tipo_Impacto": "Efecto", "impacto_pct": "Demanda (%)", "Zone": "Zona"},
         color_discrete_map={"Aumento Tráfico": "#2ecc71", "Caída Tráfico": "#e74c3c"},
         hover_data=["zone"]
     )
 
     # Añadimos una línea vertical en el 0% para referencia clara
-    fig.add_vline(x=0, line_width=2, line_dash="dash", line_color="black")
+    fig.add_vline(x=0, line_width=2, line_dash="dash", line_color="#64748b")
+
+    _style_figure(fig)
 
     fig.update_layout(
-        xaxis_title="Cambio en el tráfico (%)",
-        legend_title_text="Efecto del Rodaje",
-        yaxis_showticklabels = False,
+        title={'text': 'Demanda', 'x': 0.5, 'xanchor': 'center'},
+        yaxis_showticklabels=False,
+        margin=dict(l=10, r=20, t=50, b=20),
+        xaxis_dtick=15,
     )
 
     if as_json:
         return fig.to_json()
     
-    return fig.to_html(full_html=False, config={'responsive': True})
+    return fig.to_html(full_html=False, config={
+        'responsive': True,
+        'displayModeBar': False,      # Oculta la barra superior flotante
+        'scrollZoom': False,          # Evita hacer zoom con el dedo/rueda
+        }
 
+    )
 
-def grafica2(topN=25,as_json=False):
+def grafica2(topN=25, as_json=False):
 
     impacto_economico = data2.copy()
     
@@ -85,29 +106,34 @@ def grafica2(topN=25,as_json=False):
         x="profit_pct",
         y="zone",
         orientation="h",
-        title=f"TOP {topN} Impacto del Rodaje en Ingresos por Hora",
-        labels={"profit_pct": "Cambio en Ingresos ($/Hora) %", "zone": "Zona"},
+        labels={"Tipo_Impacto": "Efecto", "profit_pct": "Ingresos (%) %", "zone": "Zona"},
         color="Tipo_Impacto",
         color_discrete_map={"Aumento Ingresos": "#2ecc71", "Caida Ingresos": "#e74c3c"},
         hover_data=["zone"]
     )
+    _style_figure(fig2)
 
     fig2.update_layout(
-        xaxis_title="Cambio en Ingresos (%)",
+        title={'text': 'Ingresos', 'x': 0.5, 'xanchor': 'center'},
         yaxis={"categoryorder": "total ascending",
                "showticklabels": False},
-        legend_title_text="Efecto del Rodaje",
+        margin=dict(l=10, r=20, t=50, b=20),
+        xaxis_dtick=5,
     )
 
-    fig2.add_vline(x=0, line_dash="dash", line_color="black")
+    fig2.add_vline(x=0, line_dash="dash", line_color="#64748b")
 
     if as_json:
         return fig2.to_json()
     
-    return fig2.to_html(full_html=False, config={'responsive': True})
+    return fig2.to_html(full_html=False, config={
+        'responsive': True,
+        'displayModeBar': False,      # Oculta la barra superior flotante
+        'scrollZoom': False,          # Evita hacer zoom con el dedo/rueda
+        }
+ )
 
-
-def grafica3(topN=25,as_json=False):
+def grafica3(topN=25, as_json=False):
 
     impacto_velocidad = data3.copy()
     
@@ -123,28 +149,33 @@ def grafica3(topN=25,as_json=False):
         x="friction_pct",
         y="zone",
         orientation="h",
-        title=f"TOP {topN} Impacto de los Rodajes en la Velocidad del Tráfico",
-        labels={"friction_pct": "Cambio en Velocidad (%)", "zone": "Zona"},
+        labels={"Tipo_Velocidad": "Efecto", "friction_pct": "Velocidad (%)", "zone": "Zona"},
         color="Tipo_Velocidad",
         color_discrete_map={"Aumento Velocidad": "#2ecc71", "Caida Velocidad": "#e74c3c"},
         hover_data=["zone"]    
     )
-    
+
+    _style_figure(fig)
+
     fig.update_layout(
-        xaxis_title="Cambio en Velocidad (%)",
+        title={'text': 'Velocidad', 'x': 0.5, 'xanchor': 'center'},
         yaxis={"categoryorder": "total ascending",
                "showticklabels": False},
-        legend_title_text="Efecto del Rodaje",
+        margin=dict(l=10, r=20, t=50, b=20),
+        xaxis_dtick=5,
     )
 
-    fig.add_vline(x=0, line_dash="dash")
-
+    fig.add_vline(x=0, line_dash="dash", line_color="#64748b")
 
     if as_json:
         return fig.to_json()
     
-    return fig.to_html(full_html=False, config={'responsive': True})
-
+    return fig.to_html(full_html=False, config={
+        'responsive': True,
+        'displayModeBar': False,      # Oculta la barra superior flotante
+        'scrollZoom': False,          # Evita hacer zoom con el dedo/rueda
+        }
+ )
 
 def grafica4():
 
@@ -160,19 +191,32 @@ def grafica4():
         y="tip_amount",
         color="has_event",
         markers=True,
-        title="Propina Media por Hora (Eventos vs No Eventos)"
+        labels={"tip_amount": "Propina promedio", "hour": "Hora", "has_event": "Evento"},
+        color_discrete_map={
+            True: "#3b82f6",   # Con evento -> Azul
+            False: "#ef4444",  # Sin evento -> Rojo
+            }
     )
 
-    fig.update_xaxes(dtick=1)
+    fig.update_layout(
+        title={'text': 'Propina Promedia', 'x': 0.5, 'xanchor': 'center'},
+    )
 
-    return fig.to_html(full_html=False, config={'responsive': True})
+    _style_figure(fig)
+
+    return fig.to_html(full_html=False, config={
+        'responsive': True,
+        'displayModeBar': False,
+        'scrollZoom': False
+    })  
+
 
 def grafica5():
-
-    data5["hour"] = data5["date_hour"].dt.hour
+    df = data5.copy()
+    df["hour"] = df["date_hour"].dt.hour
 
     hourly_effect = (
-        data5.groupby(["hour", "has_event"])["trip_count"]
+        df.groupby(["hour", "has_event"])["trip_count"]
         .mean()
         .reset_index()
     )
@@ -183,14 +227,25 @@ def grafica5():
         y="trip_count",
         color="has_event",
         markers=True,
-        title="Demanda Media por Hora (Con vs Sin Evento)",
-        labels={"trip_count": "Viajes medios"}
+        labels={"trip_count": "Viajes medios", "hour": "Hora", "has_event": "Evento"},
+        color_discrete_map={
+            True: "#3b82f6",   # Con evento -> Azul
+            False: "#ef4444",  # Sin evento -> Rojo
+            }
     )
 
-    fig.update_xaxes(dtick=1)
-    
-    return fig.to_html(full_html=False, config={'responsive': True})
+    fig.update_layout(
+        title={'text': 'Demanda Promedia', 'x': 0.5, 'xanchor': 'center'},
+    )
 
+    _style_figure(fig)
+
+    return fig.to_html(full_html=False, config={
+        'responsive': True,
+        'displayModeBar': False,      # Oculta la barra superior flotante
+        'scrollZoom': False,          # Evita hacer zoom con el dedo/rueda
+        }
+ )
 
 def generate_films_taxi_map():
     # Generar el Mapa
@@ -214,3 +269,27 @@ def generate_films_taxi_map():
 
     # Extraer el HTML del mapa folium para inyectarlo en Jinja
     return m._repr_html_()
+
+def extract_impact_summary():
+    """Extract impact summary for dashboard indicators"""
+
+    # Max demand impact
+    max_demand_impact = data1['impacto_pct'].max()
+    min_demand_impact = data1['impacto_pct'].min()
+
+    # Max income impact
+    max_income_impact = data2['profit_pct'].max()
+    min_income_impact = data2['profit_pct'].min()
+
+    # Max speed impact
+    max_speed_impact = data3['friction_pct'].max()
+    min_speed_impact = data3['friction_pct'].min()
+
+    return {
+        'demand_impact': round(max_demand_impact, 1),
+        'demand_direction': 'positive' if max_demand_impact > 0 else 'negative',
+        'income_impact': round(max_income_impact, 1),
+        'income_direction': 'positive' if max_income_impact > 0 else 'negative',
+        'speed_impact': round(max_speed_impact, 1),
+        'speed_direction': 'positive' if max_speed_impact > 0 else 'negative',
+    }

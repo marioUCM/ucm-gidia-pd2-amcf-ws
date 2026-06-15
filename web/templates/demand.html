@@ -1,15 +1,24 @@
 {% extends "base.html" %}
 
+{% block title %}Demanda — BoostMobility{% endblock %}
+
+{% block meta_description %}
+Predicción de demanda por zona y hora, ranking de zonas con mayor actividad y mapa coroplético de demanda estimada.
+{% endblock %}
+
 {% block content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/module-shell.css') }}">
 <link rel="stylesheet" href="{{ url_for('static', filename='css/demand.css') }}">
 
+<div class="module-page">
 <div class="demand-container">
 
     <!-- HEADER -->
-    <div class="header">
-        <h1>🚕 Predicción de <span>Demanda</span></h1>
-        <p>Optimiza tus rutas y maximiza tus ingresos</p>
-    </div>
+    <header class="page-hero header">
+        <p class="page-kicker">Módulo demanda</p>
+        <h1 class="page-title">Predicción de <span class="page-accent">demanda</span></h1>
+        <p class="page-lead">Modelo preentrenado, zonas con mayor demanda estimada y mapa por fecha y hora.</p>
+    </header>
 
     <div class="demand-layout">
 
@@ -243,6 +252,7 @@
         </div>
     </div>
 
+</div>
 </div>
 
 <!-- CONEXIÓN BACKEND → JS -->
