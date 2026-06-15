@@ -21,7 +21,7 @@ data = gpd.read_parquet(BASE_DIR/"../../data/money/df_mapa.parquet")
 data['ZIP_CODE'] = data['ZIP_CODE'].astype(str)
 
 
-def grafica1(topN=25,as_sjon=False):
+def grafica1(topN=25,as_json=False):
 
 
      # Ordenamos el dataframe por propina de mayor a menor
@@ -40,19 +40,28 @@ def grafica1(topN=25,as_sjon=False):
     )
 
     fig.update_layout(
-        title=f'TOP {topN} Códigos Postales más y menos demandados',
-        xaxis_title='Numero de Viajes',
-        yaxis_title='ZIP Code',
+        title={'text': 'Demanda', 'x': 0.5, 'xanchor': 'center'},
+        xaxis_title=None,
+        yaxis_title=None,
         yaxis={'categoryorder': 'total ascending'},
+        yaxis_showticklabels=False,
         coloraxis_showscale=False,
+        margin=dict(l=10, r=20, t=50, b=20),
     )
 
-    if as_sjon:
+    if as_json:
         return fig.to_json()
-    return fig.to_html(full_html=False, config={'responsive': True})
+    
+    return fig.to_html(full_html=False, config={
+        'responsive': True,
+        'displayModeBar': False,      # Oculta la barra superior flotante
+        'scrollZoom': False,          # Evita hacer zoom con el dedo/rueda
+        }
+
+    )
 
 
-def grafica2(topN=25,as_sjon=False):
+def grafica2(topN=25,as_json=False):
 
     # Ordenamos el dataframe por propina de mayor a menor
     df_ordenado = data.sort_values('propina_media', ascending=False)
@@ -70,20 +79,27 @@ def grafica2(topN=25,as_sjon=False):
     )
 
     fig.update_layout(
-        title=f'TOP {topN} Códigos Postales más y menos generosos',
-        xaxis_title='Propina Media ($)',
-        yaxis_title='ZIP Code',
+        title={'text': 'Propina', 'x': 0.5, 'xanchor': 'center'},
+        xaxis_title=None,
+        yaxis_title=None,
         yaxis={'categoryorder': 'total ascending'}, # Ordena correctamente de mayor a menor
+        yaxis_showticklabels=False,
         coloraxis_showscale=False,
+        margin=dict(l=10, r=20, t=50, b=20)
     )
 
-    if as_sjon:
+    if as_json:
         return fig.to_json()
-    return fig.to_html(full_html=False, config={'responsive': True})
+        
+    return fig.to_html(full_html=False, config={
+        'responsive': True,
+        'displayModeBar': False,      # Oculta la barra superior flotante
+        'scrollZoom': False,          # Evita hacer zoom con el dedo/rueda
+        }
+    )
 
 
-
-def grafica3(topN=25,as_sjon=False):
+def grafica3(topN=25,as_json=False):
 
     # Ordenamos el dataframe por propina de mayor a menor
     df_ordenado = data.sort_values('ingreso_medio', ascending=False)
@@ -101,17 +117,24 @@ def grafica3(topN=25,as_sjon=False):
     )
 
     fig.update_layout(
-        title=f'TOP {topN} Códigos Postales mayor y menor ingreso',
-        xaxis_title='Ingreso Medio ($)',
-        yaxis_title='ZIP Code',
+        title={'text': 'Ingreso', 'x': 0.5, 'xanchor': 'center'},
+        xaxis_title=None,
+        yaxis_title=None,
         yaxis={'categoryorder': 'total ascending'}, # Ordena correctamente de mayor a menor
+        yaxis_showticklabels=False,
         coloraxis_showscale=False,
+        margin=dict(l=10, r=20, t=50, b=20)
     )
 
-    if as_sjon:
+    if as_json:
         return fig.to_json()
-    return fig.to_html(full_html=False, config={'responsive': True})
-    
+
+    return fig.to_html(full_html=False, config={
+        'responsive': True,
+        'displayModeBar': False,      # Oculta la barra superior flotante
+        'scrollZoom': False,          # Evita hacer zoom con el dedo/rueda
+        }
+    )    
 
 def grafica4():
 
@@ -121,9 +144,10 @@ def grafica4():
     )
 
     fig.update_layout(
-        title='Distribución de Viajes: Boxplot',
-        xaxis_title='',
-        yaxis_title='Total Viajes',
+        title={'text': 'Viajes', 'x': 0.5, 'xanchor': 'center'},
+        xaxis_title=None,
+        yaxis_title=None,
+        margin=dict(l=40, r=20, t=50, b=20)
     )
 
     return fig.to_html(full_html=False, config={'responsive': True})
@@ -136,13 +160,18 @@ def grafica5():
     )
 
     fig.update_layout(
-        title='Distribución de Propinas: Boxplot',
-        xaxis_title='',
-        yaxis_title='Propina Media ($)',
+        title={'text': 'Propinas', 'x': 0.5, 'xanchor': 'center'},
+        xaxis_title=None,
+        yaxis_title=None,
+        margin=dict(l=40, r=20, t=50, b=20)
     )
 
-    return fig.to_html(full_html=False, config={'responsive': True})
-
+    return fig.to_html(full_html=False, config={
+        'responsive': True,
+        'displayModeBar': False,      # Oculta la barra superior flotante
+        'scrollZoom': False,          # Evita hacer zoom con el dedo/rueda
+        }
+    )
 
 def grafica6():
     fig = px.box(
@@ -151,14 +180,84 @@ def grafica6():
     )
 
     fig.update_layout(
-        title='Distribución de Ingresos: Boxplot',
-        xaxis_title='',
-        yaxis_title='Ingreso Medio ($)',
+        title={'text': 'Ingresos', 'x': 0.5, 'xanchor': 'center'},
+        xaxis_title=None,
+        yaxis_title=None,
+        margin=dict(l=40, r=20, t=50, b=20)
     )
 
-    return fig.to_html(full_html=False, config={'responsive': True})
+    return fig.to_html(full_html=False, config={
+        'responsive': True,
+        'displayModeBar': False,      # Oculta la barra superior flotante
+        'scrollZoom': False,          # Evita hacer zoom con el dedo/rueda
+        }
+    )
 
+def grafica7(as_json=False):
+    """Scatter plot: Relación entre volumen de viajes y propinas (color by income)"""
 
+    fig = px.scatter(
+        data_frame=data,
+        x='volumen_viajes',
+        y='propina_media',
+        color='ingreso_medio',
+        size='volumen_viajes',
+        hover_name='ZIP_CODE',
+        hover_data={
+            'volumen_viajes': ':,.0f',
+            'propina_media': ':,.2f',
+            'ingreso_medio': ':,.0f'
+        },
+        color_continuous_scale='YlOrRd',
+        size_max=35,
+        opacity=0.7,
+    )
+
+    # Evitamos que el borde del gráfico "corte" las burbujas grandes
+    fig.update_traces(cliponaxis=False)
+
+    fig.update_layout(
+        title=None,
+        xaxis_title=None,
+        yaxis_title=None,
+        coloraxis_showscale=False,
+        hovermode='closest',
+        plot_bgcolor='rgba(244, 245, 247, 0.5)',
+        autosize=True,
+        margin=dict(l=20, r=40, t=20, b=20),
+    )
+
+    max_x = data['volumen_viajes'].max()
+    max_y = data['propina_media'].max()
+
+    fig.update_xaxes(
+        range=[0, max_x * 1.15],
+        tickformat='~s',
+        title_standoff=12,
+        showgrid=True,
+        gridwidth=1,
+        gridcolor='rgba(200, 200, 200, 0.2)',
+        automargin=True  # Fuerza a Plotly a no cortar el texto inferior
+    )
+    
+    fig.update_yaxes(
+        range=[0, max_y * 1.15],
+        tickformat='$.1f', # Un decimal para evitar números repetidos en el eje (ej. $2.0, $2.5)
+        title_standoff=8,
+        showgrid=True,
+        gridwidth=1,
+        gridcolor='rgba(200, 200, 200, 0.2)',
+        automargin=True  # Fuerza a Plotly a no cortar el texto lateral
+    )
+
+    if as_json:
+        return fig.to_json()
+    return fig.to_html(full_html=False, config={
+        'responsive': True,
+        'displayModeBar': False,      # Oculta la barra superior flotante
+        'scrollZoom': False,          # Evita hacer zoom con el dedo/rueda
+        }
+    )
 
 
 def generate_economic_map():
@@ -325,7 +424,49 @@ def generate_economic_map():
     ).add_to(m)
 
     # CONTROL DE CAPAS
-    folium.LayerControl(collapsed=False).add_to(m)
+    folium.LayerControl(collapsed=True).add_to(m)
 
     # Extraer el HTML del mapa folium para inyectarlo en Jinja
     return m._repr_html_()
+
+def extract_kpi_data():
+    """Extract KPI data for dashboard cards"""
+
+    # Top earning zip code
+    top_earning_idx = data['ingreso_medio'].idxmax()
+    top_earning_zip = data.loc[top_earning_idx, 'ZIP_CODE']
+    top_earning_value = data.loc[top_earning_idx, 'ingreso_medio']
+
+    # Highest tips zone
+    top_tips_idx = data['propina_media'].idxmax()
+    top_tips_zip = data.loc[top_tips_idx, 'ZIP_CODE']
+    top_tips_value = data.loc[top_tips_idx, 'propina_media']
+
+    # Highest demand zone
+    top_volume_idx = data['volumen_viajes'].idxmax()
+    top_volume_zip = data.loc[top_volume_idx, 'ZIP_CODE']
+    top_volume_value = data.loc[top_volume_idx, 'volumen_viajes']
+
+    # Global statistics
+    avg_income = data['ingreso_medio'].mean()
+    avg_tips = data['propina_media'].mean()
+    avg_volume = data['volumen_viajes'].mean()
+
+    median_income = data['ingreso_medio'].median()
+    median_tips = data['propina_media'].median()
+    median_volume = data['volumen_viajes'].median()
+
+    return {
+        'top_earning_zip': top_earning_zip,
+        'top_earning_value': round(top_earning_value, 2),
+        'top_tips_zip': top_tips_zip,
+        'top_tips_value': round(top_tips_value, 2),
+        'top_volume_zip': top_volume_zip,
+        'top_volume_value': int(top_volume_value),
+        'avg_income': round(avg_income, 2),
+        'avg_tips': round(avg_tips, 2),
+        'avg_volume': int(avg_volume),
+        'median_income': round(median_income, 2),
+        'median_tips': round(median_tips, 2),
+        'median_volume': int(median_volume),
+    }

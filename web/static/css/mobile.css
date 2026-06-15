@@ -1,0 +1,416 @@
+/* Móvil y pantallas táctiles — carga después de styles.css */
+
+html {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+}
+
+body {
+    overflow-x: clip;
+}
+
+@supports not (overflow-x: clip) {
+    body {
+        overflow-x: hidden;
+    }
+}
+
+/* iPhone / notch: barra y pie respetan zona segura */
+.site-header {
+    padding-left: env(safe-area-inset-left, 0);
+    padding-right: env(safe-area-inset-right, 0);
+}
+
+.navbar {
+    padding-top: max(4px, env(safe-area-inset-top, 0px));
+    min-height: max(var(--header-h, 60px), calc(var(--header-h, 60px) * 0.5 + env(safe-area-inset-top, 0px)));
+}
+
+.site-main {
+    padding-left: max(clamp(12px, 3vw, 24px), env(safe-area-inset-left, 0px));
+    padding-right: max(clamp(12px, 3vw, 24px), env(safe-area-inset-right, 0px));
+    padding-bottom: max(clamp(24px, 4vw, 40px), env(safe-area-inset-bottom, 0px));
+}
+
+.site-footer {
+    padding-left: max(clamp(16px, 4vw, 36px), env(safe-area-inset-left, 0px));
+    padding-right: max(clamp(16px, 4vw, 36px), env(safe-area-inset-right, 0px));
+    padding-bottom: max(28px, env(safe-area-inset-bottom, 12px));
+}
+
+/* Evita zoom indeseado en iOS al enfocar campos (mínimo 16px) */
+@media (max-width: 767px) {
+    .site-main select,
+    .site-main input[type="date"],
+    .site-main input[type="number"],
+    .site-main input[type="text"],
+    .site-main input[type="search"],
+    .site-main textarea {
+        font-size: 16px;
+    }
+
+    .nav-toggle,
+    .nav-links a,
+    .site-footer-nav a {
+        touch-action: manipulation;
+    }
+
+    .nav-links {
+        max-height: min(78dvh, calc(100dvh - var(--header-h, 60px) - env(safe-area-inset-top, 0px) - 24px));
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+        overscroll-behavior: contain;
+        padding-bottom: max(20px, env(safe-area-inset-bottom, 0px));
+    }
+
+    .nav-links a {
+        min-height: 48px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .cards {
+        grid-template-columns: 1fr;
+    }
+
+    .card {
+        min-height: 0;
+    }
+
+    /* Plotly legend visibility on mobile - better hide */
+    .plot-slot .plotly-graph-div .legend {
+        display: none !important;
+        pointer-events: none !important;
+    }
+
+    .plot-slot .plotly-graph-div .infolayer .legend {
+        display: none !important;
+    }
+
+    /* Leyendas en desktop - fix styling */
+    .legend {
+        background-color: rgba(255, 255, 255, 0.95) !important;
+        border: 1px solid #ddd !important;
+    }
+
+    /* Map containers mobile - SAME AS METRO */
+    .map-coropletico-wrapper,
+    .map-pelis-wrapper {
+        overflow: hidden;
+    }
+
+    .map-coropletico-wrapper iframe,
+    .map-pelis-wrapper iframe {
+        display: block;
+        width: 100%;
+        min-height: 50vh;
+        height: 50vh;
+        border: 0;
+        border-radius: 12px;
+    }
+
+    .map-coropletico-wrapper .folium-map,
+    .map-coropletico-wrapper .leaflet-container,
+    .map-pelis-wrapper .folium-map,
+    .map-pelis-wrapper .leaflet-container {
+        width: 100% !important;
+        height: 50vh !important;
+        min-height: 50vh !important;
+        border-radius: 12px;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    /* KPI Cards responsive */
+    .kpi-section {
+        grid-template-columns: repeat(2, 1fr);
+        gap: clamp(10px, 2vw, 14px);
+    }
+
+    .kpi-card {
+        padding: clamp(12px, 2vw, 16px);
+        min-height: 120px;
+    }
+
+    .kpi-icon {
+        font-size: 1.5rem;
+        margin-bottom: 6px;
+    }
+
+    .kpi-value {
+        font-size: clamp(1rem, 2.5vw, 1.25rem);
+    }
+
+    /* Impact Indicators responsive */
+    .impact-summary {
+        grid-template-columns: 1fr;
+        gap: clamp(10px, 2vw, 14px);
+    }
+
+    .impact-indicator {
+        padding: clamp(16px, 2.5vw, 20px);
+    }
+
+    .impact-value {
+        font-size: clamp(1.25rem, 3vw, 1.75rem);
+    }
+
+    /* Map containers responsive */
+    .map-container-wrapper {
+        width: 100%;
+        overflow: hidden;
+    }
+
+    .map-coropletico-wrapper,
+    .map-pelis-wrapper {
+        width: 100%;
+        height: clamp(280px, 55vh, 450px);
+        overflow: hidden;
+        border-radius: 12px;
+    }
+
+    .map-coropletico-wrapper .folium-map,
+    .map-coropletico-wrapper .leaflet-container,
+    .map-pelis-wrapper .folium-map,
+    .map-pelis-wrapper .leaflet-container {
+        width: 100% !important;
+        height: 100% !important;
+        border-radius: 12px !important;
+    }
+
+    /* Charts responsive */
+    .plot-slot {
+        max-width: 100%;
+        width: 100%;
+        box-sizing: border-box;
+        /* Altura mínima en unidades de viewport: evita gráficas “aplatanadas” en iPhone */
+        min-height: min(72vw, 400px);
+        -webkit-transform: translateZ(0);
+        transform: translateZ(0);
+    }
+
+    .plot-slot .plotly-graph-div {
+        max-width: 100%;
+    }
+
+    .analytics-page .plot-slot,
+    .module-page .plot-slot {
+        overflow-x: hidden;
+        overflow-y: visible;
+    }
+
+    .plot-slot .modebar-container {
+        top: 2px !important;
+        right: 2px !important;
+    }
+
+    /* Grid adjustments for mobile */
+    .plot-grid--interactive,
+    .plot-grid--static {
+        grid-template-columns: 1fr;
+    }
+
+    .plot-grid--static > .plot-slot:last-child {
+        grid-column: auto;
+        min-height: 300px;
+    }
+
+    .map-container {
+        height: clamp(260px, 52vh, 500px);
+    }
+
+    .map-legend {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 12px 18px;
+    }
+
+    /* Section headers responsive */
+    .section-header h2 {
+        font-size: clamp(1rem, 2vw, 1.125rem);
+    }
+
+    .section-header p {
+        font-size: 0.75rem;
+    }
+
+    /* Toolbar responsive */
+    .chart-toolbar {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+    }
+
+    .chart-toolbar label {
+        text-align: center;
+        font-size: 0.8125rem;
+    }
+
+    .chart-toolbar input[type=”number”],
+    .chart-toolbar button {
+        width: 100%;
+        max-width: 100%;
+        font-size: 16px;
+    }
+
+    .toolbar-hint {
+        font-size: 0.75rem;
+        text-align: center;
+    }
+
+    /*OPTIMIZACIONES PARA LA PÁGINA DE METRO (MÓVIL GENERAL)*/
+    
+    /* Forzar tipografía fluida basada en el ancho de pantalla para que nunca rompa */
+    .metro-page .hero-card h2 {
+        font-size: clamp(1.85rem, 7vw, 2.75rem) !important;
+    }
+    
+    .metro-page .hero-score {
+        font-size: clamp(1.6rem, 6vw, 2.2rem) !important;
+    }
+    
+    .metro-page .focus-group-top h4 {
+        font-size: clamp(1.5rem, 5.5vw, 2rem) !important;
+    }
+
+    /* Reducir los márgenes internos para ganar área de lectura útil */
+    .metro-page .hero-card,
+    .metro-page .empty-card,
+    .metro-page .section {
+        padding: 16px 14px !important;
+    }
+    
+    /* El resumen de estadísticas se ve gigante en 1 sola columna; 
+       mantener 2 columnas hace que sea mucho más compacto y elegante */
+    .metro-page .focus-group-summary {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 10px !important;
+    }
+    
+    .metro-page .focus-group-summary strong {
+        font-size: 20px !important;
+    }
+    
+    /* Separar el botón flotante del título cuando colapsen verticalmente */
+    .metro-page .section-header {
+        gap: 12px !important;
+    }
+}
+
+/* Tablet adjustments (768px - 1024px) */
+@media (min-width: 768px) and (max-width: 1024px) {
+    .kpi-section {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .impact-summary {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .plot-grid--interactive {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .plot-grid--static {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .chart-toolbar {
+        flex-wrap: wrap;
+    }
+
+    .chart-toolbar input[type="number"] {
+        width: 80px;
+    }
+}
+
+/* Menú abierto: evita scroll del fondo */
+body.nav-drawer-open {
+    overflow: hidden;
+}
+
+body.nav-drawer-open .site-main,
+body.nav-drawer-open .site-footer {
+    pointer-events: none;
+}
+
+body.nav-drawer-open .site-header,
+body.nav-drawer-open .site-header * {
+    pointer-events: auto;
+}
+
+@media (min-width: 768px) {
+    body.nav-drawer-open {
+        overflow: unset;
+    }
+
+    body.nav-drawer-open .site-main,
+    body.nav-drawer-open .site-footer {
+        pointer-events: auto;
+    }
+}
+
+@media (max-width: 480px) {
+    .module-page {
+        padding-left: max(10px, env(safe-area-inset-left, 0px));
+        padding-right: max(10px, env(safe-area-inset-right, 0px));
+    }
+
+    .kpi-section {
+        grid-template-columns: 1fr;
+    }
+
+    .impact-summary {
+        grid-template-columns: 1fr;
+    }
+
+    .chart-toolbar label {
+        width: 100%;
+        text-align: center;
+    }
+
+    .kpi-value {
+        font-size: 1.125rem;
+    }
+
+    .impact-value {
+        font-size: 1.5rem;
+    }
+
+    .plot-grid--static > .plot-slot:last-child {
+        min-height: 420px;  /* Le damos espacio de sobra para la gráfica de 400px */
+        overflow: visible;  /* Prevenimos que el navegador recorte las burbujas lateralmente */
+    }
+    
+    /* Ajustes críticos para teléfonos muy estrechos */
+    .metro-page .metro-meta {
+        flex-direction: column;
+        gap: 8px !important;
+        padding: 10px 12px !important;
+    }
+
+    /* Rediseño táctil para las filas de líneas de metro (Métricas debajo del nombre) */
+    .metro-page .line-prob-row {
+        grid-template-columns: 1fr !important; /* Rompe el diseño horizontal a vertical */
+        gap: 12px !important;
+        padding: 12px !important;
+    }
+
+    .metro-page .line-prob-metrics {
+        justify-content: flex-start !important; /* Alinea los indicadores a la izquierda */
+        width: 100% !important;
+        gap: 8px !important;
+    }
+
+    .metro-page .line-prob-metric {
+        flex: 1 1 calc(50% - 4px) !important; /* Distribuye las métricas al 50% del ancho cada una */
+        text-align: left !important;
+        padding: 6px 10px !important;
+    }
+    
+    .metro-page .line-prob-metric::before,
+    .metro-page .line-prob-metric::after {
+        width: 100% !important; /* Ajuste para el fondo de llenado de la métrica */
+    }
+}

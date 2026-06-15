@@ -1,180 +1,261 @@
-/* --- BASE Y LAYOUT --- */
-body {
-    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-    background-color: #f9f9f9; /* Fondo claro para que destaquen las sombras */
-    margin: 0;
-    color: #111;
-}
+/* Módulo eventos: detalles que complementan module-shell.css */
 
-.container {
-    max-width: 1350px;
-    margin: 60px auto; /* Centrado como en tu layout principal */
-    padding: 0 20px;
-}
-
-/* --- TÍTULOS --- */
-.container > h1 {
-    text-align: center;
-    font-size: 48px;
-    margin-bottom: 50px;
-}
-
-.container > h1 span, .map-pelis-header h1 span {
-    color: #ffd60a; /* Tu amarillo característico */
-}
-
-/* --- SECCIONES PRINCIPALES (Estilo .model-section) --- */
-.map-pelis-container, .interactive-section {
-    background: white;
-    padding: 35px;
-    border-radius: 24px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.08); /* Sombra suave idéntica a la tuya */
-    margin-bottom: 40px;
+/* Map container - SAME AS METRO */
+.map-container-wrapper {
     width: 100%;
-    box-sizing: border-box;
+    height: auto;
 }
 
-/* --- MAPA --- */
-.map-pelis-header {
-    text-align: center;
-    margin-bottom: 25px;
-}
-
-.map-pelis-header h1 {
-    font-size: 28px;
-    margin: 0 0 8px 0;
-}
-
-.map-pelis-header p {
-    color: #777;
-    font-size: 15px;
-    margin: 0;
+.map-panel__frame {
+    border-radius: 22px;
+    border: 1px solid #d8e3ef;
+    background: #ffffff;
+    padding: 14px;
 }
 
 .map-pelis-wrapper {
-    width: 100%;
-    height: 500px;
-    border-radius: 16px;
     overflow: hidden;
-    margin-top: 15px;
-    border: 1px solid #eee;
+    border-radius: 18px;
+    background: #ffffff;
+    display: block;
 }
 
-/* --- CONTROLES (Estilo .input-group y .btn-primary) --- */
-.controls {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 15px;
-    margin-bottom: 30px;
-    padding-bottom: 30px;
-    border-bottom: 1px solid #eee; /* Línea separadora limpia */
+.map-pelis-wrapper iframe {
+    display: block;
+    width: 100%;
+    min-height: 720px;
+    border: 0;
+    border-radius: 18px;
 }
 
-.controls label {
-    font-weight: 500;
-    font-size: 15px;
+.map-pelis-wrapper > div {
+    width: 100%;
 }
 
-.controls input[type="number"] {
-    padding: 12px;
-    border-radius: 10px;
-    border: 1px solid #ddd;
-    font-size: 14px;
-    width: 80px;
-    text-align: center;
-    outline: none;
-    transition: all 0.2s ease;
+.map-pelis-wrapper .folium-map,
+.map-pelis-wrapper .leaflet-container {
+    width: 100% !important;
+    height: 720px !important;
+    border-radius: 18px;
+    margin: 0 !important;
+    padding: 0 !important;
 }
 
-.controls input[type="number"]:focus {
-    border-color: #ffd60a;
+.map-pelis-wrapper svg,
+.map-pelis-wrapper canvas {
+    width: 100% !important;
+    height: 100% !important;
 }
 
-.controls button {
-    padding: 14px 30px;
-    background: #ffd60a;
-    border: none;
-    border-radius: 12px;
-    font-weight: bold;
-    cursor: pointer;
-    font-size: 16px;
-    transition: background 0.3s ease;
-}
-
-.controls button:hover {
-    background: #e6c200;
-}
-
-.controls button:disabled {
-    background: #eee;
-    color: #888;
-    cursor: not-allowed;
-}
-
-/* --- CUADRÍCULA DE GRÁFICAS --- */
-.grid, .static-section {
+/* Impact Indicators Section */
+.impact-summary {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 30px;
+    grid-template-columns: repeat(3, 1fr);
+    gap: clamp(14px, 2.5vw, 20px);
+    margin-bottom: clamp(28px, 4vw, 36px);
     width: 100%;
 }
 
-.static-section {
-    margin-bottom: 60px;
+.impact-indicator {
+    background: var(--color-surface);
+    border: 2px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: clamp(20px, 3vw, 28px);
+    text-align: center;
+    box-shadow: var(--shadow-sm);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
 }
 
-/* --- TARJETAS INDIVIDUALES DE GRÁFICAS --- */
-/* Las gráficas interactivas van dentro de una sección blanca, así que les damos un fondo más suave */
-.grid > div {
-    background: #fafafa;
-    padding: 20px;
-    border-radius: 20px;
-    border: 1px solid #eee;
-    transition: all 0.25s ease;
-
-    min-width: 0; 
-    max-width: 100%;
-    overflow: hidden;
-}
-
-/* Las estáticas van sueltas, así que les damos el formato de "carta" principal */
-.static-section > div {
-    background: white;
-    padding: 35px;
-    border-radius: 24px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
-    transition: all 0.25s ease;
-
-    min-width: 0; 
-    max-width: 100%;
-    overflow: hidden;
-}
-
-/* Efecto hover estilo .top-zone-item */
-.grid > div:hover, .static-section > div:hover {
+.impact-indicator:hover {
     transform: translateY(-2px);
-    box-shadow: 0 12px 25px rgba(0,0,0,0.1);
+    box-shadow: var(--shadow-md);
 }
 
-/* --- RESPONSIVE --- */
-@media (max-width: 900px) {
-    .grid, .static-section {
+.impact-indicator.positive {
+    border-color: #22c55e;
+    background: linear-gradient(135deg, rgba(34, 197, 94, 0.05) 0%, transparent 100%);
+}
+
+.impact-indicator.negative {
+    border-color: #ef4444;
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.05) 0%, transparent 100%);
+}
+
+.impact-label {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--color-text-muted);
+    margin-bottom: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.impact-value-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.impact-arrow {
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.impact-arrow.up {
+    color: #22c55e;
+}
+
+.impact-arrow.down {
+    color: #ef4444;
+}
+
+.impact-value {
+    font-size: clamp(1.75rem, 4vw, 2.25rem);
+    font-weight: 700;
+    color: var(--color-text);
+    line-height: 1;
+}
+
+.impact-unit {
+    font-size: 1rem;
+    color: var(--color-text-muted);
+    margin-left: 2px;
+}
+
+/* Section Headers */
+.section-header {
+    margin-bottom: clamp(16px, 2.5vw, 22px);
+    padding-bottom: 12px;
+    border-bottom: 2px solid var(--color-border);
+}
+
+.section-header h2 {
+    margin: 0 0 6px;
+    font-size: clamp(1.125rem, 2.5vw, 1.375rem);
+    font-weight: 700;
+    color: var(--color-text);
+    text-align: center;
+}
+
+.section-header p {
+    margin: 0;
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    text-align: center;
+}
+
+/* Map and Charts */
+.analytics-page .surface-panel .plot-grid {
+    padding: 0 clamp(10px, 2vw, 18px) clamp(16px, 2.5vw, 22px);
+}
+
+.plot-slot {
+    background: #ffffff !important; /* Fuerza el fondo a blanco puro */
+    border: 1px solid #d8e3ef !important; /* El borde sutil que prefieras */
+    border-radius: 16px !important; /* Mantiene las esquinas redondeadas */
+    padding: 10px; 
+}
+
+/* Grid layouts for charts */
+.plot-grid--interactive {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: clamp(14px, 2.5vw, 20px);
+}
+
+.plot-grid--static {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: clamp(14px, 2.5vw, 20px);
+}
+
+/* Altura consistente para gráficas */
+.plot-grid--interactive > .plot-slot,
+.plot-grid--static > .plot-slot {
+    min-height: 350px;
+    display: flex;
+    flex-direction: column;
+}
+
+.plot-grid--interactive > .plot-slot .plotly-graph-div,
+.plot-grid--static > .plot-slot .plotly-graph-div {
+    flex: 1;
+    min-height: 300px;
+}
+
+/* Section containers */
+.charts-section {
+    margin-bottom: clamp(24px, 3.5vw, 32px);
+}
+
+.analytics-page .grid > .plot-slot,
+.analytics-page .static-section > .plot-slot {
+    min-height: 280px;
+}
+
+/* Color coding for event indicators */
+.event-indicator {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 500;
+    font-size: 0.875rem;
+    padding: 4px 10px;
+    border-radius: var(--radius-sm);
+}
+
+.event-indicator.with-event {
+    background: rgba(34, 197, 94, 0.1);
+    color: #22c55e;
+}
+
+.event-indicator.without-event {
+    background: rgba(107, 114, 128, 0.1);
+    color: #6b7280;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1200px) {
+    .plot-grid--interactive {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .plot-grid--static {
         grid-template-columns: 1fr;
     }
-    
-    .controls {
-        flex-direction: column;
-        width: 100%;
+
+    .impact-summary {
+        grid-template-columns: repeat(2, 1fr);
     }
-    
-    .controls input[type="number"] {
-        width: 100%;
-        max-width: 300px;
+}
+
+@media (max-width: 900px) {
+    .plot-grid--interactive {
+        grid-template-columns: 1fr;
     }
 
-    .controls button {
-        width: 100%;
-        max-width: 300px;
+    .plot-grid--static {
+        grid-template-columns: 1fr;
+    }
+
+    .impact-summary {
+        grid-template-columns: 1fr;
+    }
+
+    .map-pelis-wrapper {
+        height: clamp(300px, 60vh, 500px);
+    }
+}
+
+@media (max-width: 480px) {
+    .impact-summary {
+        grid-template-columns: 1fr;
+    }
+
+    .map-pelis-wrapper {
+        height: 55vh;
+        min-height: 260px;
+        max-height: 380px;
     }
 }

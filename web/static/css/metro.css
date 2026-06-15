@@ -1,26 +1,32 @@
 .metro-page {
     max-width: 1100px;
-    margin: 50px auto 80px auto;
-    padding: 0 20px;
+    margin: 0 auto;
+    padding: 0;
 }
 
 .metro-header {
     text-align: center;
-    margin-bottom: 28px;
+    margin-bottom: clamp(20px, 3vw, 28px);
 }
 
-.metro-header h1 {
-    font-size: 48px;
+.metro-header.page-hero {
+    max-width: 40rem;
+}
+
+.metro-header h1,
+.metro-header .page-title {
     margin-bottom: 12px;
 }
 
-.metro-header span {
-    color: #ffd60a;
+.metro-header span,
+.metro-header .page-accent {
+    color: var(--color-accent-hover, #c9a227);
 }
 
-.metro-header p {
-    color: #666;
-    font-size: 17px;
+.metro-header p,
+.metro-header .page-lead {
+    color: var(--color-text-muted, #666);
+    font-size: 1rem;
     margin: 0;
 }
 
@@ -769,5 +775,45 @@ tbody tr:hover {
 
     .prediction-map-live iframe {
         min-height: 620px;
+    }
+}
+
+@media (max-width: 600px) {
+    .prediction-map-live iframe {
+        min-height: 50vh;
+        height: 50vh;
+    }
+
+    .prediction-map-live .folium-map,
+    .prediction-map-live .leaflet-container {
+        min-height: 50vh !important;
+        height: 50vh !important;
+    }
+
+    /* Fix overflow issues on mobile */
+    .metro-page {
+        overflow-x: hidden;
+    }
+
+    .line-prob-row {
+        overflow: hidden;
+    }
+
+    .line-prob-metrics {
+        min-width: auto;
+        flex-wrap: wrap;
+    }
+
+    .line-prob-metric {
+        min-width: 60px;
+        font-size: 12px;
+    }
+
+    .focus-group-card {
+        padding: 16px;
+    }
+
+    .line-group-card {
+        padding: 14px;
     }
 }
