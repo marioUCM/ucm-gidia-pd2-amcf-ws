@@ -1,4 +1,4 @@
-# UCM GIDIA - Análisis y Predicción de Datos
+# BoostMobility - Análisis y Predicción de Movilidad Urbana en NY
 
 Una aplicación web basada en **Flask** para análisis, visualización y predicción de datos con múltiples módulos especializados. El proyecto utiliza modelos de Machine Learning y proporciona una interfaz interactiva para explorar datos de demanda, transporte público, eventos, análisis económico y propinas.
 
