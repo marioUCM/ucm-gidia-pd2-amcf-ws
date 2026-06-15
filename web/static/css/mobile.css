@@ -258,6 +258,44 @@ body {
         font-size: 0.75rem;
         text-align: center;
     }
+
+    /*OPTIMIZACIONES PARA LA PÁGINA DE METRO (MÓVIL GENERAL)*/
+    
+    /* Forzar tipografía fluida basada en el ancho de pantalla para que nunca rompa */
+    .metro-page .hero-card h2 {
+        font-size: clamp(1.85rem, 7vw, 2.75rem) !important;
+    }
+    
+    .metro-page .hero-score {
+        font-size: clamp(1.6rem, 6vw, 2.2rem) !important;
+    }
+    
+    .metro-page .focus-group-top h4 {
+        font-size: clamp(1.5rem, 5.5vw, 2rem) !important;
+    }
+
+    /* Reducir los márgenes internos para ganar área de lectura útil */
+    .metro-page .hero-card,
+    .metro-page .empty-card,
+    .metro-page .section {
+        padding: 16px 14px !important;
+    }
+    
+    /* El resumen de estadísticas se ve gigante en 1 sola columna; 
+       mantener 2 columnas hace que sea mucho más compacto y elegante */
+    .metro-page .focus-group-summary {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 10px !important;
+    }
+    
+    .metro-page .focus-group-summary strong {
+        font-size: 20px !important;
+    }
+    
+    /* Separar el botón flotante del título cuando colapsen verticalmente */
+    .metro-page .section-header {
+        gap: 12px !important;
+    }
 }
 
 /* Tablet adjustments (768px - 1024px) */
@@ -343,5 +381,36 @@ body.nav-drawer-open .site-header * {
     .plot-grid--static > .plot-slot:last-child {
         min-height: 420px;  /* Le damos espacio de sobra para la gráfica de 400px */
         overflow: visible;  /* Prevenimos que el navegador recorte las burbujas lateralmente */
+    }
+    
+    /* Ajustes críticos para teléfonos muy estrechos */
+    .metro-page .metro-meta {
+        flex-direction: column;
+        gap: 8px !important;
+        padding: 10px 12px !important;
+    }
+
+    /* Rediseño táctil para las filas de líneas de metro (Métricas debajo del nombre) */
+    .metro-page .line-prob-row {
+        grid-template-columns: 1fr !important; /* Rompe el diseño horizontal a vertical */
+        gap: 12px !important;
+        padding: 12px !important;
+    }
+
+    .metro-page .line-prob-metrics {
+        justify-content: flex-start !important; /* Alinea los indicadores a la izquierda */
+        width: 100% !important;
+        gap: 8px !important;
+    }
+
+    .metro-page .line-prob-metric {
+        flex: 1 1 calc(50% - 4px) !important; /* Distribuye las métricas al 50% del ancho cada una */
+        text-align: left !important;
+        padding: 6px 10px !important;
+    }
+    
+    .metro-page .line-prob-metric::before,
+    .metro-page .line-prob-metric::after {
+        width: 100% !important; /* Ajuste para el fondo de llenado de la métrica */
     }
 }

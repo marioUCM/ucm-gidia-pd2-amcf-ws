@@ -234,7 +234,7 @@ def _attach_map_bounds(
     root_object: folium.Figure,
     map_name: str,
     bounds: list[list[float]],
-    min_zoom: int = 11,
+    min_zoom: int = 10,
 ) -> None:
     bounds_json = json.dumps(bounds)
     map_name_json = json.dumps(map_name)
@@ -250,7 +250,7 @@ def _attach_map_bounds(
                 }}
                 map.setMaxBounds({bounds_json});
                 map.setMinZoom({min_zoom_json});
-                map.options.maxBoundsViscosity = 1.0;
+                map.options.maxBoundsViscosity = 0.5;
             }}
             applyBounds();
         }})();
@@ -1053,7 +1053,7 @@ def _generate_metro_prediction_map(snapshot: pd.DataFrame | None = None) -> str 
     metro_map = folium.Map(
         location=map_data.get("center", [40.7282, -73.9418]),
         zoom_start=11,
-        min_zoom=11,
+        min_zoom=10,
         max_zoom=14,
         max_bounds=True,
         control_scale=True,
@@ -1182,7 +1182,7 @@ def _generate_metro_prediction_map(snapshot: pd.DataFrame | None = None) -> str 
     stations_group.add_to(metro_map)
     metro_map.add_to(figure)
     if bounds:
-        _attach_map_bounds(figure, metro_map.get_name(), bounds, min_zoom=11)
+        _attach_map_bounds(figure, metro_map.get_name(), bounds)
     _attach_animated_trains(figure, metro_map.get_name(), animated_train_specs)
     _attach_line_focus_controls(figure, metro_map.get_name(), line_layers)
     return figure.render()
