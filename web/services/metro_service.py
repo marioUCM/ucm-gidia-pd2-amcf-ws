@@ -103,8 +103,8 @@ def _read_json(path: Path | str, default_value):
         return json.loads(path.read_text(encoding="utf-8"))
 
     try:
-        return load_json_from_minio(path)         # MINIO
-        # return pd.read_json(path)               # LOCAL
+        # return load_json_from_minio(path)         # MINIO
+        return pd.read_json(path)               # LOCAL
     except Exception:  
         return default_value
 
